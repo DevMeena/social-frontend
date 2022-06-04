@@ -1,4 +1,4 @@
-import './App.css';
+import Home from "./pages/home/Home.js";
 import SignInSide from './Components/SignInSide.js';
 import SignUpSide from './Components/SignUpSide.js';
 import Home from './Components/Home.js';
@@ -12,6 +12,9 @@ function App() {
       <div className='App'>
         <div className='content'>
           <Routes>
+            <Route exact path="/" element ={<SignInSide/>}>
+            </Route>            
+            <Route exact path="/signup" element ={<SignUpSide/>}></Route> 
             <Route exact path='/' element={<SignInSide />}></Route>
             <Route exact path='/google-auth' element={<GoogleAuth />}></Route>
             <Route exact path='/signup' element={<SignUpSide />}></Route>
