@@ -1,6 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import './topbar.css';
 import { Person, Search, Chat, Notifications } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import Topbarbutton from './Topbarbutton';
 
 export default function Topbar() {
   const navigate = useNavigate();
@@ -49,12 +50,7 @@ export default function Topbar() {
             <span className='topbarIconBadge'>4</span>
           </div>
         </div>
-        <img
-          src='/assets/image1.png'
-          alt='dp'
-          onClick={signout}
-          className='topbarImg'
-        />
+        <Topbarbutton />
       </div>
     </div>
   );

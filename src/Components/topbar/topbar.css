@@ -81,3 +81,15 @@
     cursor: pointer;
     object-fit: cover;
 }
+.topbarImgUl{
+    position: absolute !important;
+    top: 50px !important;
+    right: 0px !important;
+    margin-left: 0px;
+    padding: 3px;
+    list-style: none;
+    font-size: smaller;
+}
+.topbarImgLi{
+    padding: 4px;
+}
