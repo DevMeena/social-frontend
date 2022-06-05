@@ -10,7 +10,7 @@ import {
   AUTHENTICATE_USER_REQUEST,
   AUTHENTICATE_USER_SUCCESS,
   AUTHENTICATE_USER_FAIL,
-  CLEAR_ERRORS,
+  // CLEAR_ERRORS,
 } from '../constants/auth';
 
 // Login
