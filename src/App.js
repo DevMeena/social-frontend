@@ -1,10 +1,11 @@
 import Home from "./pages/home/Home.js";
 import SignInSide from './Components/SignInSide.js';
 import SignUpSide from './Components/SignUpSide.js';
-import Home from './Components/Home.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import GoogleAuth from './Components/GoogleLogin';
 import PrivateRoute from './Components/PrivateRoute';
+import ForgotPassword from "./Components/ForgotPassword.js";
+import ResetPassword from "./Components/ResetPassword.js";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route exact path='/home' element={<Home />}></Route>
             </Route>
+            
+            <Route exact path='/forgot' element={<ForgotPassword />}></Route>
+            <Route exact path='/reset' element={<ResetPassword />}></Route>
           </Routes>
         </div>
       </div>

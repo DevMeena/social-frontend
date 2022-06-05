@@ -1,5 +1,6 @@
 import "./topbar.css"
 import { Person, Search, Chat, Notifications } from "@mui/icons-material";
+import Topbarbutton from "./Topbarbutton";
 
 export default function Topbar() {
   return (
@@ -36,7 +37,7 @@ export default function Topbar() {
                       <span className="topbarIconBadge">4</span>
                   </div>
               </div>
-              <img src="/assets/image1.png" alt="dp" className="topbarImg" />
+              <Topbarbutton/>
           </div>
       </div>
   )

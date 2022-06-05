@@ -88,7 +88,7 @@ export default function SignUpSide() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
-            Sign up
+            Reset Password
           </Typography>
           <Box
             component='form'
@@ -98,36 +98,15 @@ export default function SignUpSide() {
           >
             <ToastContainer />
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete='given-name'
-                  name='firstName'
-                  required
-                  fullWidth
-                  id='firstName'
-                  label='First Name'
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id='lastName'
-                  label='Last Name'
-                  name='lastName'
-                  autoComplete='family-name'
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
+                  id='oldPassword'
+                  label='Old Password'
+                  name='password'
+                  type='password'
+                  autoComplete='old-password'
                 />
               </Grid>
               <Grid item xs={12}>
@@ -135,10 +114,21 @@ export default function SignUpSide() {
                   required
                   fullWidth
                   name='password'
-                  label='Password'
+                  label='New Password'
                   type='password'
-                  id='password'
+                  id='newpassword'
                   autoComplete='new-password'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name='password'
+                  label='Repeat New Password'
+                  type='password'
+                  id='repeatpassword'
+                  autoComplete='repeat-password'
                 />
               </Grid>
               {/* <Grid item xs={12}>
@@ -149,22 +139,14 @@ export default function SignUpSide() {
                   label='I want to receive inspiration, marketing promotions and updates via email.'
                 />
               </Grid> */}
-            </Grid>
             <Button
               type='submit'
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Reset Password
             </Button>
-            <Grid container justifyContent='flex-end'>
-              <Grid item>
-                <Link href='/' variant='body2'>
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
