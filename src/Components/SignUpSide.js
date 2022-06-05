@@ -18,6 +18,7 @@ import { register } from '../actions/auth';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GoogleAuth from './GoogleLogin';
 
 function Copyright(props) {
   return (
@@ -167,6 +168,7 @@ export default function SignUpSide() {
             </Grid>
           </Box>
         </Box>
+        <GoogleAuth />
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>

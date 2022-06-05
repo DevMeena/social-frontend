@@ -13,7 +13,6 @@ function App() {
           <Routes>
             <Route exact path='/' element={<SignInSide />}></Route>
             <Route exact path='/signup' element={<SignUpSide />}></Route>
-            <Route exact path='/google-auth' element={<GoogleAuth />}></Route>
 
             <Route element={<PrivateRoute />}>
               <Route exact path='/home' element={<Home />}></Route>

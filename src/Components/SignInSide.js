@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +18,8 @@ import { Backdrop, CircularProgress } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PeopleIcon from '@mui/icons-material/People';
+import GoogleAuth from './GoogleLogin';
+import axios from 'axios';
 // import { makeStyles } from '@mui/styles';
 
 // const useStyles = makeStyles((theme) => ({
@@ -26,6 +28,17 @@ import PeopleIcon from '@mui/icons-material/People';
 //     color: '#fff',
 //   },
 // }));
+
+const hasToken = () => {
+  if (typeof window === undefined) {
+    return false;
+  }
+  if (localStorage.getItem('jwt')) {
+    return JSON.parse(localStorage.getItem('jwt'));
+  } else {
+    return false;
+  }
+};
 
 function Copyright(props) {
   return (
@@ -51,6 +64,9 @@ export default function SignInSide() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [redirect, setRedirect] = useState(false);
+  const [load, setLoad] = useState(false);
+
   const { loading, isAuthenticated, user, error } = useSelector(
     (state) => state.auth
   );
@@ -73,15 +89,53 @@ export default function SignInSide() {
     user: user,
   });
 
+  const checkToken = async () => {
+    setLoad(true);
+    setRedirect(false);
+    const token = await hasToken();
+    if (!token) navigate('/');
+    console.log('token is ', token);
+    console.log('Bearer ' + token);
+    axios
+      .post('http://localhost:8000/user/authCheck', token, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        console.log('this is res', res);
+        setRedirect(true);
+        setLoad(false);
+      })
+      .catch((err) => {
+        setRedirect(false);
+        setLoad(false);
+        console.log(err);
+      });
+  };
+
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
+  async function timeSensativeAction() {
+    //must be async func
+    //do something here
+    await sleep(5000); //wait 5 seconds
+    //continue on...
+  }
+
   useEffect(() => {
-    if (isAuthenticated) {
-      console.log(user);
+    checkToken();
+    if (redirect) {
       navigate('/home');
     }
+    // if (isAuthenticated) {
+    //   console.log(user);
+    //   navigate('/home');
+    // }
     if (error) {
       toast.error('Invalid credentials!');
     }
-  }, [isAuthenticated, error]);
+  }, [isAuthenticated, error, redirect]);
 
   function AuthForm() {
     return (
@@ -205,6 +259,7 @@ export default function SignInSide() {
                     </Link>
                   </Grid>
                 </Grid>
+                <GoogleAuth />
                 <Copyright sx={{ mt: 5 }} />
               </Box>
             </Box>
@@ -214,7 +269,7 @@ export default function SignInSide() {
     );
   }
 
-  return loading ? (
+  return loading || load ? (
     <Backdrop
       styles={{
         zIndex: theme.zIndex.drawer + 1,
