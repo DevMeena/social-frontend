@@ -4,15 +4,6 @@ import { Person, Search, Chat, Notifications } from '@mui/icons-material';
 import Topbarbutton from './Topbarbutton';
 
 export default function Topbar() {
-  const navigate = useNavigate();
-
-  const signout = () => {
-    if (typeof window !== undefined) {
-      localStorage.removeItem('jwt');
-      navigate('/');
-    }
-  };
-
   return (
     <div className='topbarContainer'>
       <div className='topbarLeft'>
