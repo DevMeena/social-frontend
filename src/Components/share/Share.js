@@ -8,7 +8,7 @@ export default function Share() {
   return (
       <Box sx={{
           padding: "7px",
-          width: "80%",
+          width: "85%",
           margin: "auto",
           marginTop: "10px",
           webkitBoxShadow: "0px 0px 16px -8px rgba(0,0,0,0.68)",
