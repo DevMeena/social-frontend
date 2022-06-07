@@ -25,7 +25,8 @@ export default function Sidebar() {
     <Box sx={{
       flex: '3',
       height: 'calc(100vh-50px)',
-      overflowY: 'scroll'
+      overflowY: 'scroll',
+      zIndex: "-10"
     }}>
       <Box>
       <List
