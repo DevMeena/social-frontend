@@ -12,6 +12,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { Bookmark, CastForEducation, Chat, Event, Group, MiscellaneousServices, QuestionMark, RssFeed, VideoLabel, Work } from '@mui/icons-material';
+import { Box } from '@mui/material';
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
@@ -21,7 +22,13 @@ export default function Sidebar() {
   };
 
   return (
-    <List
+    <Box sx={{
+      flex: '3',
+      height: 'calc(100vh-50px)',
+      overflowY: 'scroll'
+    }}>
+      <Box>
+      <List
     className='SidebarList'
       sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}
       component="nav"
@@ -92,6 +99,41 @@ export default function Sidebar() {
         </ListItemIcon>
         <ListItemText primary="Courses" />
       </ListItemButton>
+      
+      <ListItemButton>
+        <ListItemIcon>
+          <CastForEducation />
+        </ListItemIcon>
+        <ListItemText primary="Courses" />
+      </ListItemButton>
+      
+      <ListItemButton>
+        <ListItemIcon>
+          <CastForEducation />
+        </ListItemIcon>
+        <ListItemText primary="Courses" />
+      </ListItemButton>
+      
+      <ListItemButton>
+        <ListItemIcon>
+          <CastForEducation />
+        </ListItemIcon>
+        <ListItemText primary="Courses" />
+      </ListItemButton>
+      
+      <ListItemButton>
+        <ListItemIcon>
+          <CastForEducation />
+        </ListItemIcon>
+        <ListItemText primary="Courses" />
+      </ListItemButton>
+      
+      <ListItemButton>
+        <ListItemIcon>
+          <CastForEducation />
+        </ListItemIcon>
+        <ListItemText primary="Courses" />
+      </ListItemButton>
 
       <ListItemButton onClick={handleClick}>
         <ListItemIcon>
@@ -111,5 +153,8 @@ export default function Sidebar() {
         </List>
       </Collapse>
     </List>
-  );
+
+    </Box>
+    </Box>
+      );
 }
