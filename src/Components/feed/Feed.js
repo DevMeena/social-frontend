@@ -6,8 +6,8 @@ import Share from '../share/Share'
 export default function Feed() {
   return (
       <Box sx={
-          {flex: "5.5",
-        zIndex: "-10"}
+          {flex: "5.5"
+       }
       }>
           <Share/>
           <Post/>
