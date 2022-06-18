@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GoogleAuth from './GoogleLogin';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Stack from '@mui/material/Stack';
 
 function Copyright(props) {
   return (
@@ -43,6 +45,8 @@ const theme = createTheme();
 export default function SignUpSide() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [verified, setVerified] = useState(false);
+  const [verifymailclicked, setVerifymailclicked] = useState(false);
 
   const { loading, isSuccess, error } = useSelector((state) => state.auth);
 
@@ -122,6 +126,7 @@ export default function SignUpSide() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <Stack direction="row">
                 <TextField
                   required
                   fullWidth
@@ -130,6 +135,10 @@ export default function SignUpSide() {
                   name='email'
                   autoComplete='email'
                 />
+                
+                {verified && 
+                <CheckCircleIcon />}
+                </Stack>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -142,6 +151,19 @@ export default function SignUpSide() {
                   autoComplete='new-password'
                 />
               </Grid>
+              
+              {verifymailclicked && !verified && <Grid item xs={12}><TextField
+                  margin='normal'
+                  required
+                  fullWidth
+                  name='password'
+                  label='OTP'
+                  type='number'
+                  id='otp'
+                  autoComplete='otp'
+                />
+                </Grid>
+                }
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -150,15 +172,36 @@ export default function SignUpSide() {
                   label='I want to receive inspiration, marketing promotions and updates via email.'
                 />
               </Grid> */}
+
             </Grid>
-            <Button
+            {!verifymailclicked && <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={()=> setVerifymailclicked(true)}
+                >
+                  Verify mail
+                </Button>
+}
+            
+            {verifymailclicked && !verified && <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={()=> setVerified(true)}
+                >
+                  Verify OTP
+                </Button>}
+            {verified && <Button
               type='submit'
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
-            </Button>
+            </Button>}
             <Grid container justifyContent='flex-end'>
               <Grid item>
                 <Link href='/' variant='body2'>
