@@ -21,6 +21,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import GoogleAuth from './GoogleLogin';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
+import { API } from '../api';
 
 function Copyright(props) {
   return (
@@ -45,11 +47,25 @@ const theme = createTheme();
 export default function SignUpSide() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [otp, setOtp] = useState(0);
+  const [er, setEr] = useState('');
   const [verified, setVerified] = useState(false);
   const [verifymailclicked, setVerifymailclicked] = useState(false);
 
   const { loading, isSuccess, error } = useSelector((state) => state.auth);
 
+  const getHashedOtp = () => {
+    if (typeof window === undefined) {
+      return false;
+    }
+    if (localStorage.getItem('otp')) {
+      return JSON.parse(localStorage.getItem('otp'));
+    } else {
+      return false;
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -59,6 +75,43 @@ export default function SignUpSide() {
     });
     const name = data.get('firstName') + ' ' + data.get('lastName');
     dispatch(register(name, data.get('email'), data.get('password')));
+  };
+
+  const mailVerification = () => {
+    axios
+      .post(`${API}/user/verifyEmail`, { name: name, email: email })
+      .then((res) => {
+        console.log(res);
+        if (typeof window !== undefined) {
+          localStorage.setItem('otp', JSON.stringify(res.data));
+        }
+        setVerifymailclicked(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setVerifymailclicked(false);
+      });
+  };
+
+  const submitOtp = () => {
+    setEr('');
+    const hashedOtp = getHashedOtp();
+    if (!hashedOtp) {
+      setEr('OTP does not match');
+      return;
+    }
+    axios
+      .post(`${API}/user/verifyToken`, { otp, hashedOtp })
+      .then((res) => {
+        console.log(res);
+        setVerified(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setEr('OTP does not match');
+        console.log('error block runnign');
+        setVerified(false);
+      });
   };
 
   const CustomToastWithLink = () => (
@@ -75,7 +128,10 @@ export default function SignUpSide() {
     if (error) {
       toast.error(error);
     }
-  }, [isSuccess, error]);
+    if (er) {
+      toast.error(er);
+    }
+  }, [isSuccess, error, er]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -113,6 +169,10 @@ export default function SignUpSide() {
                   id='firstName'
                   label='First Name'
                   autoFocus
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -126,18 +186,21 @@ export default function SignUpSide() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <Stack direction="row">
-                <TextField
-                  required
-                  fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
-                />
-                
-                {verified && 
-                <CheckCircleIcon />}
+                <Stack direction='row'>
+                  <TextField
+                    required
+                    fullWidth
+                    id='email'
+                    label='Email Address'
+                    name='email'
+                    autoComplete='email'
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+
+                  {verified && <CheckCircleIcon />}
                 </Stack>
               </Grid>
               <Grid item xs={12}>
@@ -151,19 +214,25 @@ export default function SignUpSide() {
                   autoComplete='new-password'
                 />
               </Grid>
-              
-              {verifymailclicked && !verified && <Grid item xs={12}><TextField
-                  margin='normal'
-                  required
-                  fullWidth
-                  name='password'
-                  label='OTP'
-                  type='number'
-                  id='otp'
-                  autoComplete='otp'
-                />
+
+              {verifymailclicked && !verified && (
+                <Grid item xs={12}>
+                  <TextField
+                    margin='normal'
+                    required
+                    fullWidth
+                    name='password'
+                    label='OTP'
+                    type='number'
+                    id='otp'
+                    autoComplete='otp'
+                    value={otp}
+                    onChange={(e) => {
+                      setOtp(e.target.value);
+                    }}
+                  />
                 </Grid>
-                }
+              )}
               {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -172,36 +241,40 @@ export default function SignUpSide() {
                   label='I want to receive inspiration, marketing promotions and updates via email.'
                 />
               </Grid> */}
-
             </Grid>
-            {!verifymailclicked && <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={()=> setVerifymailclicked(true)}
-                >
-                  Verify mail
-                </Button>
-}
-            
-            {verifymailclicked && !verified && <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={()=> setVerified(true)}
-                >
-                  Verify OTP
-                </Button>}
-            {verified && <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>}
+            {!verifymailclicked && (
+              <Button
+                // type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+                onClick={mailVerification}
+              >
+                Verify mail
+              </Button>
+            )}
+
+            {verifymailclicked && !verified && (
+              <Button
+                // type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+                onClick={submitOtp}
+              >
+                Verify OTP
+              </Button>
+            )}
+            {verified && (
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            )}
             <Grid container justifyContent='flex-end'>
               <Grid item>
                 <Link href='/' variant='body2'>
