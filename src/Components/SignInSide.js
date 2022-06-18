@@ -20,7 +20,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import PeopleIcon from '@mui/icons-material/People';
 import GoogleAuth from './GoogleLogin';
 import axios from 'axios';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 // import { makeStyles } from '@mui/styles';
 
 // const useStyles = makeStyles((theme) => ({
@@ -67,8 +66,6 @@ export default function SignInSide() {
 
   const [redirect, setRedirect] = useState(false);
   const [load, setLoad] = useState(false);
-  const [verified, setVerified] = useState(false);
-  const [verifymailclicked, setVerifymailclicked] = useState(false);
 
   const { loading, isAuthenticated, user, error } = useSelector(
     (state) => state.auth
@@ -218,7 +215,7 @@ export default function SignInSide() {
                 onSubmit={handleSubmit}
                 sx={{ mt: 1 }}
               >
-                <><TextField
+                <TextField
                   margin='normal'
                   required
                   fullWidth
@@ -228,10 +225,7 @@ export default function SignInSide() {
                   autoComplete='email'
                   autoFocus
                 />
-                
-                {verified && 
-                <CheckCircleIcon />}
-                </>
+              
                 <TextField
                   margin='normal'
                   required
@@ -246,49 +240,18 @@ export default function SignInSide() {
                   control={<Checkbox value='remember' color='primary' />}
                   label='Remember me'
                 /> */}
-
-                {!verifymailclicked && <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={()=> setVerifymailclicked(true)}
-                >
-                  Verify mail
-                </Button>
-}
-                
-                {verifymailclicked && !verified && <TextField
-                  margin='normal'
-                  required
-                  fullWidth
-                  name='password'
-                  label='OTP'
-                  type='number'
-                  id='otp'
-                  autoComplete='otp'
-                />
-                }
-                {verifymailclicked && !verified && <Button
-                  type='submit'
-                  fullWidth
-                  variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={()=> setVerified(true)}
-                >
-                  Verify OTP
-                </Button>}
+    
 
 
-               {
-                verified && <Button
+               
+                <Button
                   type='submit'
                   fullWidth
                   variant='contained'
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign In
-                </Button>}
+                </Button>
                 <Grid container>
                   <Grid item xs>
                     <Link href='/forgot' variant='body2'>
