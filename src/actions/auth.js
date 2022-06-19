@@ -53,7 +53,7 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
+      payload: 'Account already exists',
     });
   }
 };

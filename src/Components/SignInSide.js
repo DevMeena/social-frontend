@@ -175,9 +175,8 @@ export default function SignInSide() {
               />
               <Typography
                 component='h2'
-                style={{ fontWeight: 600 }}
+                style={{ fontWeight: 600, color: 'white' }}
                 variant='h2'
-                color='primary'
               >
                 ConnectBook
               </Typography>
@@ -225,7 +224,7 @@ export default function SignInSide() {
                   autoComplete='email'
                   autoFocus
                 />
-              
+
                 <TextField
                   margin='normal'
                   required
@@ -240,10 +239,7 @@ export default function SignInSide() {
                   control={<Checkbox value='remember' color='primary' />}
                   label='Remember me'
                 /> */}
-    
 
-
-               
                 <Button
                   type='submit'
                   fullWidth

@@ -48,7 +48,9 @@ export default function SignUpSide() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [password, setPassword] = useState('');
   const [otp, setOtp] = useState(0);
   const [er, setEr] = useState('');
   const [verified, setVerified] = useState(false);
@@ -68,18 +70,30 @@ export default function SignUpSide() {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    const name = data.get('firstName') + ' ' + data.get('lastName');
-    dispatch(register(name, data.get('email'), data.get('password')));
+    // const data = new FormData(event.currentTarget);
+    // console.log(email);
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
+    // const name = data.get('firstName') + ' ' + data.get('lastName');
+    const name = fname + ' ' + lname;
+    dispatch(register(name, email, password));
+    setVerified(false);
+    setVerifymailclicked(false);
+    setEmail('');
+    setFname('');
+    setLname('');
+    setPassword('');
+    setOtp('');
   };
 
   const mailVerification = () => {
     axios
-      .post(`${API}/user/verifyEmail`, { name: name, email: email })
+      .post(`${API}/user/verifyEmail`, {
+        name: fname + ' ' + lname,
+        email: email,
+      })
       .then((res) => {
         console.log(res);
         if (typeof window !== undefined) {
@@ -122,16 +136,20 @@ export default function SignUpSide() {
   );
 
   useEffect(() => {
-    if (isSuccess) {
-      toast.info(CustomToastWithLink);
-    }
     if (error) {
       toast.error(error);
     }
+  }, [error]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.info(CustomToastWithLink);
+    }
+
     if (er) {
       toast.error(er);
     }
-  }, [isSuccess, error, er]);
+  }, [isSuccess, er, verified, verifymailclicked]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -169,12 +187,14 @@ export default function SignUpSide() {
                   id='firstName'
                   label='First Name'
                   autoFocus
-                  value={name}
+                  value={fname}
                   onChange={(e) => {
-                    setName(e.target.value);
+                    setFname(e.target.value);
                   }}
+                  disabled={verifymailclicked}
                 />
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
@@ -183,8 +203,14 @@ export default function SignUpSide() {
                   label='Last Name'
                   name='lastName'
                   autoComplete='family-name'
+                  value={lname}
+                  onChange={(e) => {
+                    setLname(e.target.value);
+                  }}
+                  disabled={verifymailclicked}
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <Stack direction='row'>
                   <TextField
@@ -195,6 +221,7 @@ export default function SignUpSide() {
                     name='email'
                     autoComplete='email'
                     value={email}
+                    disabled={verifymailclicked}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
@@ -203,6 +230,7 @@ export default function SignUpSide() {
                   {verified && <CheckCircleIcon />}
                 </Stack>
               </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -212,6 +240,11 @@ export default function SignUpSide() {
                   type='password'
                   id='password'
                   autoComplete='new-password'
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  disabled={verifymailclicked}
                 />
               </Grid>
 
