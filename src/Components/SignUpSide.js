@@ -4,8 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,9 +11,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../actions/auth';
-import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GoogleAuth from './GoogleLogin';
@@ -45,8 +40,6 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUpSide() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -56,9 +49,13 @@ export default function SignUpSide() {
   const [verified, setVerified] = useState(false);
   const [verifymailclicked, setVerifymailclicked] = useState(false);
 
-  const { loading, isSuccess, error } = useSelector((state) => state.auth);
+  const [error, setError] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const getHashedOtp = () => {
+    /* jshint ignore:start*/
+    // eslint-disable-next-line valid-typeof
     if (typeof window === undefined) {
       return false;
     }
@@ -67,18 +64,31 @@ export default function SignUpSide() {
     } else {
       return false;
     }
+    /* jshint ignore:end*/
   };
   const handleSubmit = (event) => {
+    // setLoading(true);
+
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log(email);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-    // const name = data.get('firstName') + ' ' + data.get('lastName');
     const name = fname + ' ' + lname;
-    dispatch(register(name, email, password));
+    // dispatch(register(name, email, password));
+
+    const config = { headers: { 'Content-Type': 'application/json' } };
+
+    axios
+      .post(`${API}/user/signup`, { name, email, password }, config)
+      .then((data) => {
+        console.log('then running');
+        console.log(data);
+        setIsSuccess(true);
+      })
+      .catch((err) => {
+        console.log('error running');
+        console.log(err);
+        setError('Account already exists');
+      });
+
+    // setLoading(false);
     setVerified(false);
     setVerifymailclicked(false);
     setEmail('');
@@ -96,9 +106,12 @@ export default function SignUpSide() {
       })
       .then((res) => {
         console.log(res);
+        /* jshint ignore:start*/
+        // eslint-disable-next-line valid-typeof
         if (typeof window !== undefined) {
           localStorage.setItem('otp', JSON.stringify(res.data));
         }
+        /* jshint ignore:end*/
         setVerifymailclicked(true);
       })
       .catch((err) => {
