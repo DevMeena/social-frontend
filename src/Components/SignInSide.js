@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,34 +11,13 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../actions/auth';
-import { useNavigate } from 'react-router-dom';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PeopleIcon from '@mui/icons-material/People';
 import GoogleAuth from './GoogleLogin';
-import axios from 'axios';
-// import { makeStyles } from '@mui/styles';
-
-// const useStyles = makeStyles((theme) => ({
-//   backdrop: {
-//     zIndex: theme.zIndex.drawer + 1,
-//     color: '#fff',
-//   },
-// }));
-
-const hasToken = () => {
-  if (typeof window === undefined) {
-    return false;
-  }
-  if (localStorage.getItem('jwt')) {
-    return JSON.parse(localStorage.getItem('jwt'));
-  } else {
-    return false;
-  }
-};
+import { loginCall } from './apiCalls';
+import { AuthContext } from '../context/AuthContext';
 
 function Copyright(props) {
   return (
@@ -59,83 +38,21 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
+
 export default function SignInSide() {
-  // const classes = useStyles();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { isFetching, error, dispatch } = useContext(AuthContext);
 
-  const [redirect, setRedirect] = useState(false);
-  const [load, setLoad] = useState(false);
-
-  const { loading, isAuthenticated, user, error } = useSelector(
-    (state) => state.auth
-  );
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    dispatch(login(data.get('email'), data.get('password')));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    loginCall(data.get('email'), data.get('password'), dispatch);
   };
-  const er = null;
-  console.log('er is ', er);
-  console.log({
-    error: error,
-    loading: loading,
-    isAuth: isAuthenticated,
-    user: user,
-  });
-
-  const checkToken = async () => {
-    setLoad(true);
-    setRedirect(false);
-    const token = await hasToken();
-    if (!token) navigate('/');
-    console.log('token is ', token);
-    console.log('Bearer ' + token);
-    axios
-      .post('http://localhost:8000/user/authCheck', token, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        console.log('this is res', res);
-        setRedirect(true);
-        setLoad(false);
-      })
-      .catch((err) => {
-        setRedirect(false);
-        setLoad(false);
-        console.log(err);
-      });
-  };
-
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
-
-  async function timeSensativeAction() {
-    //must be async func
-    //do something here
-    await sleep(5000); //wait 5 seconds
-    //continue on...
-  }
 
   useEffect(() => {
-    checkToken();
-    if (redirect) {
-      navigate('/home');
-    }
-    // if (isAuthenticated) {
-    //   console.log(user);
-    //   navigate('/home');
-    // }
     if (error) {
       toast.error('Invalid credentials!');
     }
-  }, [isAuthenticated, error, redirect]);
+  }, [error]);
 
   function AuthForm() {
     return (
@@ -270,7 +187,7 @@ export default function SignInSide() {
     );
   }
 
-  return loading || load ? (
+  return isFetching ? (
     <Backdrop
       styles={{
         zIndex: theme.zIndex.drawer + 1,

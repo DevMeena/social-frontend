@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import './style.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import { googleLoginCall } from './apiCalls';
+import { AuthContext } from '../context/AuthContext';
 const clientId =
   '644150943784-dd4aaim7fuvgemorumocbbcgb4rmvdel.apps.googleusercontent.com';
 
@@ -17,32 +17,14 @@ gapi.load('client:auth2', () => {
 });
 
 const GoogleAuth = () => {
-  const navigate = useNavigate();
   const [showloginButton, setShowloginButton] = useState(true);
   const [showlogoutButton, setShowlogoutButton] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+
   const onLoginSuccess = (res) => {
-    setRedirect(false);
-    console.log('Login Success:', res.profileObj);
-    axios({
-      method: 'POST',
-      url: 'http://localhost:8000/user/googlelogin',
-      data: { tokenId: res.tokenId },
-    })
-      .then((response) => {
-        console.log('Google login successful', response);
-        // authenticate
-        if (typeof window !== undefined) {
-          localStorage.setItem('jwt', JSON.stringify(response.data.token));
-        }
-        setRedirect(true);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-    setShowloginButton(false);
-    setShowlogoutButton(true);
+    googleLoginCall(res.tokenId, dispatch);
   };
+
+  const { error, dispatch } = useContext(AuthContext);
 
   const onLoginFailure = (res) => {
     console.log('Login Failed:', res);
@@ -56,13 +38,15 @@ const GoogleAuth = () => {
   };
 
   useEffect(() => {
-    if (redirect) {
-      navigate('/home');
+    if (error) {
+      toast.error('unable to log in!');
     }
-  }, [redirect]);
+  }, [error]);
 
   return (
     <div>
+      <ToastContainer />
+
       {showloginButton ? (
         <GoogleLogin
           clientId={clientId}

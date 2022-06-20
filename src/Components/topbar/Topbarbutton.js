@@ -1,26 +1,23 @@
 import * as React from 'react';
+import { useContext } from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { useNavigate } from 'react-router-dom';
-
 import { useState } from 'react';
 import { Face, Logout, ManageAccounts } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
+import { logoutCall } from '../apiCalls';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Topbarbutton() {
   const [clicked, setClicked] = useState(false);
-  const navigate = useNavigate();
+
+  const { dispatch } = useContext(AuthContext);
 
   const signout = () => {
-    console.log('logout');
-    if (typeof window !== undefined) {
-      localStorage.removeItem('jwt');
-      navigate('/');
-    }
+    logoutCall(dispatch);
   };
   return (
     <>

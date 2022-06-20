@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,10 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../actions/auth';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'; // toast
 import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props) {
@@ -40,37 +34,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function ForgotPassword() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { loading, isSuccess, error } = useSelector((state) => state.auth);
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-    const name = data.get('firstName') + ' ' + data.get('lastName');
-    dispatch(register(name, data.get('email'), data.get('password')));
   };
-
-  const CustomToastWithLink = () => (
-    <div>
-      Account created successfully
-      <a href='/'>Sign In</a>
-    </div>
-  );
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.info(CustomToastWithLink);
-    }
-    if (error) {
-      toast.error(error);
-    }
-  }, [isSuccess, error]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -99,7 +65,6 @@ export default function ForgotPassword() {
             <ToastContainer />
 
             <Grid container spacing={2}>
-              
               <Grid item xs={12}>
                 <TextField
                   required

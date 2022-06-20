@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import './topbar.css';
 import { Person, Search, Chat, Notifications } from '@mui/icons-material';
 import Topbarbutton from './Topbarbutton';
