@@ -9,7 +9,7 @@ export const loginCall = async (email, password, dispatch) => {
     const config = { headers: { 'Content-Type': 'application/json' } };
     console.log(email, password);
     const res = await axios.post(
-      `${API}/user/login`,
+      `${API}/auth/login`,
       { email, password },
       config
     );
@@ -29,7 +29,7 @@ export const googleLoginCall = async (tokenId, dispatch) => {
     const config = { headers: { 'Content-Type': 'application/json' } };
 
     const res = await axios.post(
-      `${API}/user/googlelogin`,
+      `${API}/auth/googlelogin`,
       { tokenId },
       config
     );

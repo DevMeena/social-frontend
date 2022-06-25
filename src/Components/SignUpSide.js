@@ -76,7 +76,7 @@ export default function SignUpSide() {
     const config = { headers: { 'Content-Type': 'application/json' } };
 
     axios
-      .post(`${API}/user/signup`, { name, email, password }, config)
+      .post(`${API}/auth/signup`, { name, email, password }, config)
       .then((data) => {
         console.log('then running');
         console.log(data);
@@ -100,7 +100,7 @@ export default function SignUpSide() {
 
   const mailVerification = () => {
     axios
-      .post(`${API}/user/verifyEmail`, {
+      .post(`${API}/auth/verifyEmail`, {
         name: fname + ' ' + lname,
         email: email,
       })
@@ -128,7 +128,7 @@ export default function SignUpSide() {
       return;
     }
     axios
-      .post(`${API}/user/verifyToken`, { otp, hashedOtp })
+      .post(`${API}/auth/verifyToken`, { otp, hashedOtp })
       .then((res) => {
         console.log(res);
         setVerified(true);
