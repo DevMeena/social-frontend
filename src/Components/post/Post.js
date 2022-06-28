@@ -1,117 +1,122 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Users } from "../../dummyData";
+import "./post.css";
+import { useState } from "react";
+import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
+import {
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Checkbox,
+  IconButton,
+  Typography,
+} from "@mui/material";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export default function Post() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+const Post = ({post}) => {
+  const [like,setLike] = useState(post.like)
+  const [isLiked,setIsLiked] = useState(false)
+  const likeHandler =()=>{
+    setLike(isLiked ? like-1 : like+1)
+    setIsLiked(!isLiked)
+  }
   return (
-    <Card sx={{ maxWidth: "85%",
-    margin: "auto",
-    padding: "7px",
-    marginTop: "15px",
-    webkitBoxShadow: "0px 0px 16px -8px rgba(0,0,0,0.68)",
-    mozBoxShadow: "0px 0px 16px -8px rgba(0,0,0,0.68)",
-    boxShadow: "0px 0px 16px -8px rgba(0,0,0,0.68)",
-    borderRadius: "10px" }}>
+    <Card sx={{ margin: 5 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe"
+          src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}>
           </Avatar>
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <MoreVert />
           </IconButton>
         }
-        title="Robert Downie Jr."
-        subheader="September 14, 2016"
+        title="John Doe"
+        subheader={post.date}
       />
       <CardMedia
         component="img"
-        height="194"
-        image="/assets/image1.png"
+        height="20%"
+        image={post.photo}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-        The Adiyogi statue is a 34-metre tall (112 ft), 45-metre long (147 ft) and 25-metre wide (82 ft) steel statue of Shiva with Thirunamam at Coimbatore, Tamil Nadu. It is recognized by the Guinness World Records as the "Largest Bust Sculpture” in the world.[1][2] Designed by Sadhguru Jaggi Vasudev....
+        {post?.desc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+      <div className="postBottom">
+           <div className="postBottomLeft">
+        <IconButton aria-label="add to favorites" onClick={likeHandler}>
+          <Checkbox
+            icon={<FavoriteBorder />}
+            checkedIcon={<Favorite sx={{ color: "red" }} />}
+          />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
+             <span className="postLikeCounter">{like}</span>
+           </div>
+           <div className="postBottomRight">
+             <span className="postCommentText"></span>
+           </div>
+         </div>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set
-            aside for 10 minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over
-            medium-high heat. Add chicken, shrimp and chorizo, and cook, stirring
-            occasionally until lightly browned, 6 to 8 minutes. Transfer shrimp to a
-            large plate and set aside, leaving chicken and chorizo in the pan. Add
-            pimentón, bay leaves, garlic, tomatoes, onion, salt and pepper, and cook,
-            stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and
-            peppers, and cook without stirring, until most of the liquid is absorbed,
-            15 to 18 minutes. Reduce heat to medium-low, add reserved shrimp and
-            mussels, tucking them down into the rice, and cook again without
-            stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don&apos;t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
     </Card>
   );
-}
+};
+
+export default Post;
+
+// import "./post.css";
+// // import { MoreVert } from "@material-ui/icons";
+// import { Users } from "../../dummyData";
+// import { useState } from "react";
+
+// export default function Post({ post }) {
+  // const [like,setLike] = useState(post.like)
+  // const [isLiked,setIsLiked] = useState(false)
+
+  // const likeHandler =()=>{
+  //   setLike(isLiked ? like-1 : like+1)
+  //   setIsLiked(!isLiked)
+  // }
+//   return (
+//     <div className="post">
+//       <div className="postWrapper">
+//         <div className="postTop">
+//           <div className="postTopLeft">
+//             <img
+//               className="postProfileImg"
+//               src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+//               alt=""
+//             />
+//             <span className="postUsername">
+//               {Users.filter((u) => u.id === post?.userId)[0].username}
+//             </span>
+//             <span className="postDate">{post.date}</span>
+//           </div>
+//           <div className="postTopRight">
+//             <MoreVertIcon />
+//           </div>
+//         </div>
+//         <div className="postCenter">
+//           <span className="postText">{post?.desc}</span>
+//           <img className="postImg" src={post.photo} alt="" />
+//         </div>
+//         <div className="postBottom">
+//           <div className="postBottomLeft">
+//             <img className="likeIcon" src="assets/like.png" onClick={likeHandler} alt="" />
+//             <img className="likeIcon" src="assets/heart.png" onClick={likeHandler} alt="" />
+//             <span className="postLikeCounter">{like} people like it</span>
+//           </div>
+//           <div className="postBottomRight">
+//             <span className="postCommentText">{post.comment} comments</span>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
