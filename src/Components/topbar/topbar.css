@@ -1,7 +1,7 @@
 .topbarContainer{
     height: 50px;
     width: 100%;
-    background-color: rgb(225, 105, 68);
+    background-color: #1976d2;
     display: flex;
     align-items: center;
     top: 0;
@@ -13,6 +13,7 @@
 }
 .logo{
     font-size: 24px;
+    color: #fff;
     margin-left: 20px;
     font-weight: bold;
     cursor: pointer;
@@ -51,9 +52,11 @@
     margin-right: 10px;
     font-size: 14px;
     cursor: pointer;
+    color: #fff;
 }
 .topbarIcons{
     display: flex;
+    color: #fff;
 }
 .topbarIconItem{
     margin-right: 15px;
