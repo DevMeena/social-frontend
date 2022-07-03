@@ -1,6 +1,7 @@
 import { EmojiEmotions, Label, PermMedia, Room, Send } from '@mui/icons-material'
 import { Avatar, Box, Button, Divider, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 
@@ -22,7 +23,7 @@ export default function Share() {
                   marginBottom: "5px",
               }}>
                     <Stack direction="row" spacing={2}>
-                <Avatar alt="Adiyogi" src="/assets/image1.png" />
+                <Link to="/profile"><Avatar alt="Adiyogi" src="/assets/image1.png" /></Link>
                 <TextField id="outlined-basic" label="What's in your mind?" variant="standard" sx={{
                     width: "80%"
                 }} />
