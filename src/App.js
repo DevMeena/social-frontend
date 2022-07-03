@@ -1,4 +1,5 @@
 import Home from './pages/home/Home.js';
+import Profile from "./pages/profile/Profile";
 import SignInSide from './Components/SignInSide.js';
 import SignUpSide from './Components/SignUpSide.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -31,6 +32,7 @@ function App() {
 
             <Route element={<PrivateRoute />}>
               <Route exact path='/home' element={<Home />}></Route>
+              <Route exact path='/profile' element={<Profile />}></Route>
             </Route>
 
             <Route exact path='/forgot' element={<ForgotPassword />}></Route>
