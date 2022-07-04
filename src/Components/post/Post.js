@@ -1,7 +1,7 @@
-import { Users } from "../../dummyData";
-import "./post.css";
-import { useState } from "react";
-import { Favorite, FavoriteBorder, MoreVert, Share } from "@mui/icons-material";
+import { Users } from '../../dummyData';
+import './post.css';
+import { useState } from 'react';
+import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material';
 import {
   Avatar,
   Card,
@@ -12,57 +12,59 @@ import {
   Checkbox,
   IconButton,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 
-const Post = ({post}) => {
-  const [like,setLike] = useState(post.like)
-  const [isLiked,setIsLiked] = useState(false)
-  const likeHandler =()=>{
-    setLike(isLiked ? like-1 : like+1)
-    setIsLiked(!isLiked)
-  }
+const Post = ({ post }) => {
+  const [like, setLike] = useState(0); //post.like
+  const [isLiked, setIsLiked] = useState(false);
+  const likeHandler = () => {
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
   return (
     <Card sx={{ margin: 5 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe"
-          src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}>
-          </Avatar>
+          <Avatar
+            sx={{ bgcolor: 'red' }}
+            aria-label='recipe'
+            src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+          ></Avatar>
         }
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label='settings'>
             <MoreVert />
           </IconButton>
         }
-        title="John Doe"
+        title='John Doe'
         subheader={post.date}
       />
       <CardMedia
-        component="img"
-        height="20%"
+        component='img'
+        height='20%'
         image={post.photo}
-        alt="Paella dish"
+        alt='Paella dish'
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-        {post?.desc}
+        <Typography variant='body2' color='text.secondary'>
+          {post?.desc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-      <div className="postBottom">
-           <div className="postBottomLeft">
-        <IconButton aria-label="add to favorites" onClick={likeHandler}>
-          <Checkbox
-            icon={<FavoriteBorder />}
-            checkedIcon={<Favorite sx={{ color: "red" }} />}
-          />
-        </IconButton>
-             <span className="postLikeCounter">{like}</span>
-           </div>
-           <div className="postBottomRight">
-             <span className="postCommentText"></span>
-           </div>
-         </div>
+        <div className='postBottom'>
+          <div className='postBottomLeft'>
+            <IconButton aria-label='add to favorites' onClick={likeHandler}>
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite sx={{ color: 'red' }} />}
+              />
+            </IconButton>
+            <span className='postLikeCounter'>{like}</span>
+          </div>
+          <div className='postBottomRight'>
+            <span className='postCommentText'></span>
+          </div>
+        </div>
       </CardActions>
     </Card>
   );
@@ -76,13 +78,13 @@ export default Post;
 // import { useState } from "react";
 
 // export default function Post({ post }) {
-  // const [like,setLike] = useState(post.like)
-  // const [isLiked,setIsLiked] = useState(false)
+// const [like,setLike] = useState(post.like)
+// const [isLiked,setIsLiked] = useState(false)
 
-  // const likeHandler =()=>{
-  //   setLike(isLiked ? like-1 : like+1)
-  //   setIsLiked(!isLiked)
-  // }
+// const likeHandler =()=>{
+//   setLike(isLiked ? like-1 : like+1)
+//   setIsLiked(!isLiked)
+// }
 //   return (
 //     <div className="post">
 //       <div className="postWrapper">

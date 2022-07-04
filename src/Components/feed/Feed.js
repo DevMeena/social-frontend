@@ -4,6 +4,7 @@ import useFetch from '../../useFetch';
 import Post from '../post/Post';
 import Share from '../share/Share';
 import { Backdrop, CircularProgress } from '@mui/material';
+import { Posts } from '../../dummyData';
 
 export default function Feed() {
   const { data, loading, error } = useFetch(`/post/timeline/all`);
@@ -21,10 +22,9 @@ export default function Feed() {
   ) : (
     <Box sx={{ flex: '5.5' }}>
       <Share />
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      {Posts.map((p) => (
+        <Post key={p.id} post={p} />
+      ))}
     </Box>
   );
 }
