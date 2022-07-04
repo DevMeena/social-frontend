@@ -14,10 +14,50 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import axios from 'axios';
+import React, { useRef } from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API } from '../../api';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Share() {
+  const { user } = useContext(AuthContext);
+  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [desc, setDesc] = useState('');
+  const [file, setFile] = useState(null);
+
+  const token = user.token;
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const newPost = {
+      userId: user.user._id,
+      desc: desc,
+    };
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append('name', fileName);
+      data.append('file', file);
+      newPost.img = fileName;
+      console.log(newPost);
+      try {
+        await axios.post(`${API}/upload`, data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    try {
+      await axios.post(`${API}/post`, newPost, headers);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -49,6 +89,8 @@ export default function Share() {
               sx={{
                 width: '85%',
               }}
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
             />
           </Stack>
         </Box>
@@ -64,31 +106,45 @@ export default function Share() {
             justifyContent: 'end',
           }}
         >
-          <Box>
-            <Stack direction='row' spacing={2}>
-              <Stack direction='row'>
-                <PermMedia htmlColor='green' />
-                <Typography>Photo or Video</Typography>
+          <form
+            className='shareBottom'
+            style={{
+              display: 'flex',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'end',
+            }}
+            onSubmit={submitHandler}
+          >
+            <Box>
+              <Stack direction='row' spacing={2}>
+                <Stack direction='row'>
+                  <label
+                    htmlFor='file'
+                    className='shareOption'
+                    style={{ display: 'flex', cursor: 'pointer' }}
+                  >
+                    <PermMedia htmlColor='green' />
+                    <Typography sx={{ marginLeft: '5px', marginRight: '15px' }}>
+                      Photo or Video
+                    </Typography>
+                    <input
+                      style={{ display: 'none' }}
+                      type='file'
+                      id='file'
+                      accept='.png,.jpeg,.jpg'
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+                  </label>
+                </Stack>
               </Stack>
-              {/* <Stack direction="row">
-                          <Label htmlColor='blue'/>
-                          <Typography>Tag</Typography>
-                      </Stack> */}
-              {/* <Stack direction="row">
-                          <Room htmlColor='red'/>
-                          <Typography>Location</Typography>
-                      </Stack>
-                      <Stack direction="row">
-                          <EmojiEmotions htmlColor='tomato'/>
-                          <Typography>Feeling</Typography>
-                      </Stack> */}
-            </Stack>
-          </Box>
-          <Box style={{ marginRight: '5%' }}>
-            <Button size='small' variant='contained'>
-              Share
-            </Button>
-          </Box>
+            </Box>
+            <Box style={{ marginRight: '5%' }}>
+              <Button type='submit' size='small' variant='contained'>
+                Share
+              </Button>
+            </Box>
+          </form>
         </Stack>
       </Box>
     </Box>
