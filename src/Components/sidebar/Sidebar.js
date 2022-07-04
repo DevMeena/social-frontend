@@ -11,7 +11,18 @@ import SendIcon from '@mui/icons-material/Send';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
-import { Bookmark, CastForEducation, Chat, Event, Group, MiscellaneousServices, QuestionMark, RssFeed, VideoLabel, Work } from '@mui/icons-material';
+import {
+  Bookmark,
+  CastForEducation,
+  Chat,
+  Event,
+  Group,
+  MiscellaneousServices,
+  QuestionMark,
+  RssFeed,
+  VideoLabel,
+  Work,
+} from '@mui/icons-material';
 import { Box } from '@mui/material';
 
 export default function Sidebar() {
@@ -22,141 +33,139 @@ export default function Sidebar() {
   };
 
   return (
-    <Box sx={{
-      flex: '3',
-      height: '90vh',
-      overflowY: 'scroll',
-      position: 'sticky',
-      top: '50px'
-    }}>
-      <Box>
-      <List
-    className='SidebarList'
-      sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}
-      component="nav"
-      aria-labelledby="nested-list-subheader"
-      
+    <Box
+      sx={{
+        flex: '3',
+        height: '90vh',
+        overflowY: 'scroll',
+        position: 'sticky',
+        top: '50px',
+      }}
     >
-      <ListItemButton>
-        <ListItemIcon>
-          <RssFeed />
-        </ListItemIcon>
-        <ListItemText primary="Feed" />
-      </ListItemButton>
-
-      <ListItemButton>
-        <ListItemIcon>
-          <Chat />
-        </ListItemIcon>
-        <ListItemText primary="Chats" />
-      </ListItemButton>
-
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <VideoLabel />
-        </ListItemIcon>
-        <ListItemText primary="Videos" />
-      </ListItemButton>
-
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <Group />
-        </ListItemIcon>
-        <ListItemText primary="Groups" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <Bookmark />
-        </ListItemIcon>
-        <ListItemText primary="Bookmarks" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <QuestionMark />
-        </ListItemIcon>
-        <ListItemText primary="Questions" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <Work />
-        </ListItemIcon>
-        <ListItemText primary="Jobs" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <Event />
-        </ListItemIcon>
-        <ListItemText primary="Events" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-      
-      <ListItemButton>
-        <ListItemIcon>
-          <CastForEducation />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
-
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
-          <MiscellaneousServices />
-        </ListItemIcon>
-        <ListItemText primary="Other" />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
+      <Box>
+        <List
+          className='SidebarList'
+          sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}
+          component='nav'
+          aria-labelledby='nested-list-subheader'
+        >
+          <ListItemButton>
             <ListItemIcon>
-              <StarBorder />
+              <RssFeed />
             </ListItemIcon>
-            <ListItemText primary="Starred" />
+            <ListItemText primary='Feed' />
           </ListItemButton>
-        </List>
-      </Collapse>
-    </List>
 
+          <ListItemButton>
+            <ListItemIcon>
+              <Chat />
+            </ListItemIcon>
+            <ListItemText primary='Chats' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <VideoLabel />
+            </ListItemIcon>
+            <ListItemText primary='Videos' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <Group />
+            </ListItemIcon>
+            <ListItemText primary='Groups' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <Bookmark />
+            </ListItemIcon>
+            <ListItemText primary='Bookmarks' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <QuestionMark />
+            </ListItemIcon>
+            <ListItemText primary='Questions' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <Work />
+            </ListItemIcon>
+            <ListItemText primary='Jobs' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <Event />
+            </ListItemIcon>
+            <ListItemText primary='Events' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton>
+            <ListItemIcon>
+              <CastForEducation />
+            </ListItemIcon>
+            <ListItemText primary='Courses' />
+          </ListItemButton>
+
+          <ListItemButton onClick={handleClick}>
+            <ListItemIcon>
+              <MiscellaneousServices />
+            </ListItemIcon>
+            <ListItemText primary='Other' />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={open} timeout='auto' unmountOnExit>
+            <List component='div' disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary='Starred' />
+              </ListItemButton>
+            </List>
+          </Collapse>
+        </List>
+      </Box>
     </Box>
-    </Box>
-      );
+  );
 }
