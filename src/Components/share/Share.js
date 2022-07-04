@@ -39,7 +39,9 @@ export default function Share() {
           }}
         >
           <Stack direction='row' spacing={2}>
-            <Avatar alt='Adiyogi' src='/assets/image1.png' />
+            <Link to='/profile'>
+              <Avatar alt='Adiyogi' src='/assets/image1.png' />
+            </Link>
             <TextField
               id='outlined-basic'
               label="What's in your mind?"
