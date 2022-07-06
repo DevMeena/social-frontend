@@ -144,7 +144,7 @@ export default function SignUpSide() {
   const CustomToastWithLink = () => (
     <div>
       Account created successfully
-      <a href='/'>Sign In</a>
+      <a href='/'> Sign In</a>
     </div>
   );
 
@@ -156,7 +156,7 @@ export default function SignUpSide() {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.info(CustomToastWithLink);
+      toast.success(CustomToastWithLink);
     }
 
     if (er) {

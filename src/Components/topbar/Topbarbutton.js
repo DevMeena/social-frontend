@@ -7,18 +7,38 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useState } from 'react';
-import { Face, Logout, ManageAccounts } from '@mui/icons-material';
+import { Face, Logout, ManageAccounts, Settings } from '@mui/icons-material';
 import { logoutCall } from '../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
+import axios from 'axios';
+import { API } from '../../api';
 
 export default function Topbarbutton() {
   const [clicked, setClicked] = useState(false);
 
-  const { dispatch } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
+
+  const userId = user?.user._id;
+  const token = user?.token;
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
 
   const signout = () => {
     logoutCall(dispatch);
   };
+
+  const deleteAccount = () => {
+    if (window.confirm('Delete this account?')) {
+      axios
+        .delete(`${API}/user/${userId}`, headers)
+        .then((res) => {
+          signout();
+        })
+        .catch((e) => {
+          console.log('error');
+        });
+    }
+  };
+
   return (
     <>
       <img
@@ -58,6 +78,14 @@ export default function Topbarbutton() {
                     <ManageAccounts />
                   </ListItemIcon>
                   <ListItemText primary='Account' />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton onClick={deleteAccount}>
+                  <ListItemIcon>
+                    <Settings />
+                  </ListItemIcon>
+                  <ListItemText primary='Delete Account' />
                 </ListItemButton>
               </ListItem>
             </List>

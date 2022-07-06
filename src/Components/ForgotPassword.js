@@ -10,8 +10,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { ToastContainer } from 'react-toastify'; // toast
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { API } from '../api';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Copyright(props) {
   return (
@@ -34,9 +36,45 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function ForgotPassword() {
+  const [email, setEmail] = React.useState('');
+  const [error, setError] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    setSuccess(false);
+    setError(false);
+
+    axios
+      .post(API + '/auth/forgotPassword', { email })
+      .then((res) => {
+        console.log(res);
+        setSuccess(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(true);
+      });
+
+    setEmail('');
   };
+
+  const CustomToastWithLink = () => (
+    <div>
+      email sent successfully
+      <a href='/'> Sign In</a>
+    </div>
+  );
+
+  React.useEffect(() => {
+    if (success) {
+      toast.success(CustomToastWithLink);
+    }
+
+    if (error) {
+      toast.error('failed to send email');
+    }
+  }, [success, error]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,16 +111,10 @@ export default function ForgotPassword() {
                   label='Email Address'
                   name='email'
                   autoComplete='email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value='allowExtraEmails' color='primary' />
-                  }
-                  label='I want to receive inspiration, marketing promotions and updates via email.'
-                />
-              </Grid> */}
             </Grid>
             <Button
               type='submit'

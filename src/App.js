@@ -1,5 +1,5 @@
 import Home from './pages/home/Home.js';
-import Profile from "./pages/profile/Profile";
+import Profile from './pages/profile/Profile';
 import SignInSide from './Components/SignInSide.js';
 import SignUpSide from './Components/SignUpSide.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -9,6 +9,7 @@ import ResetPassword from './Components/ResetPassword.js';
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import Test from './Test.js';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -30,13 +31,15 @@ function App() {
               element={user ? <Navigate to='/home' /> : <SignUpSide />}
             ></Route>
 
+            <Route exact path='/test' element={<Test />}></Route>
+
             <Route element={<PrivateRoute />}>
               <Route exact path='/home' element={<Home />}></Route>
-              <Route exact path='/profile' element={<Profile />}></Route>
+              <Route exact path='/profile/:id' element={<Profile />}></Route>
+              <Route exact path='/reset' element={<ResetPassword />}></Route>
             </Route>
 
             <Route exact path='/forgot' element={<ForgotPassword />}></Route>
-            <Route exact path='/reset' element={<ResetPassword />}></Route>
           </Routes>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,11 +11,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ToastContainer, toast } from 'react-toastify';
+
 // import { useDispatch, useSelector } from 'react-redux';
 // import { register } from '../actions/auth';
 // import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify'; //toast
+// import { ToastContainer } from 'react-toastify'; //toast
 import 'react-toastify/dist/ReactToastify.css';
+import { API } from '../api';
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
+import { logoutCall } from './apiCalls';
 
 function Copyright(props) {
   return (
@@ -37,38 +44,66 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUpSide() {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  // const [oldPass, setOldPass] = useState('');
+  const [newPass, setNewPass] = useState('');
+  const [confPass, setConfPass] = useState('');
 
-  // const { loading, isSuccess, error } = useSelector((state) => state.auth);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
+
+  const { user, dispatch } = React.useContext(AuthContext);
+  const userId = user?.user._id;
+  const token = user?.token;
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+  const signout = () => {
+    logoutCall(dispatch);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('hiii');
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
-    // const name = data.get('firstName') + ' ' + data.get('lastName');
-    // dispatch(register(name, data.get('email'), data.get('password')));
+
+    setError('');
+    setSuccess('');
+
+    if (newPass === confPass) {
+      axios
+        .put(
+          `${API}/user/updatePassword/${userId}`,
+          { password: newPass },
+          headers
+        )
+        .then((res) => {
+          setSuccess('Password changed successfully');
+          signout();
+        })
+        .catch((e) => {
+          setError('Unable to change password');
+        });
+    } else {
+      setError('Passwords do not match');
+    }
+
+    setNewPass('');
+    setConfPass('');
   };
 
-  // const CustomToastWithLink = () => (
-  //   <div>
-  //     Account created successfully
-  //     <a href='/'>Sign In</a>
-  //   </div>
-  // );
+  const CustomToastWithLink = () => (
+    <div>
+      {success}
+      <a href='/'> Sign In</a>
+    </div>
+  );
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     toast.info(CustomToastWithLink);
-  //   }
-  //   if (error) {
-  //     toast.error(error);
-  //   }
-  // }, [isSuccess, error]);
+  useEffect(() => {
+    if (success) {
+      toast.success(CustomToastWithLink);
+    }
+
+    if (error) {
+      toast.error(error);
+    }
+  }, [success, error]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -96,22 +131,26 @@ export default function SignUpSide() {
           >
             <ToastContainer />
 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
+                value={oldPass}
+                onChange={(e) => setOldPass(e.target.value)}
                 id='oldPassword'
                 label='Old Password'
                 name='password'
                 type='password'
                 autoComplete='old-password'
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
                 name='password'
+                value={newPass}
+                onChange={(e) => setNewPass(e.target.value)}
                 label='New Password'
                 type='password'
                 id='newpassword'
@@ -122,6 +161,8 @@ export default function SignUpSide() {
               <TextField
                 required
                 fullWidth
+                value={confPass}
+                onChange={(e) => setConfPass(e.target.value)}
                 name='password'
                 label='Repeat New Password'
                 type='password'

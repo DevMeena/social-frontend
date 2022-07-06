@@ -1,3 +1,5 @@
+// ! UPDATE POST
+
 import {
   EmojiEmotions,
   Label,
@@ -44,13 +46,16 @@ export default function Share() {
 
     const fromData = new FormData();
 
-    fromData.set('userId', user.user._id);
-    fromData.set('desc', desc);
-    fromData.set('photo', file);
+    if (desc) {
+      fromData.set('desc', desc);
+    }
+    if (file) {
+      fromData.set('photo', file);
+    }
 
     console.log(post);
     axios
-      .post(`${API}/post`, fromData, headers)
+      .put(`${API}/post/62c57eb67cc97acf032c12b8`, fromData, headers)
       .then((res) => {
         console.log(res);
         window.location.reload();
@@ -85,7 +90,7 @@ export default function Share() {
             }}
           >
             <Stack direction='row' spacing={2}>
-              <Link to={`/profile/${user.user._id}`}>
+              <Link to='/profile'>
                 <Avatar alt='Adiyogi' src='/assets/image1.png' />
               </Link>
               <TextField
