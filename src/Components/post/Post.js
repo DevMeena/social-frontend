@@ -17,6 +17,7 @@ import { API, PF } from '../../api';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Post = ({ post }) => {
   // console.log(post?.likes.length);
@@ -77,12 +78,14 @@ const Post = ({ post }) => {
     <Card sx={{ margin: 5 }}>
       <CardHeader
         avatar={
-          <Avatar
-            sx={{ bgcolor: 'red' }}
-            aria-label='recipe'
-            // src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-            src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1657092625~exp=1657093225~hmac=4dd9cb5fab08231c7ba6e15a30778b8728965fe258d568ef23f468dc5480936e&w=740'
-          ></Avatar>
+          <Link to={`/profile/${post?.userId}`}>
+            <Avatar
+              sx={{ bgcolor: 'red' }}
+              aria-label='recipe'
+              // src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+              src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1657092625~exp=1657093225~hmac=4dd9cb5fab08231c7ba6e15a30778b8728965fe258d568ef23f468dc5480936e&w=740'
+            ></Avatar>
+          </Link>
         }
         action={
           <IconButton aria-label='settings'>
