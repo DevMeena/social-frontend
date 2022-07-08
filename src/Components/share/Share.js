@@ -19,7 +19,7 @@ import React, { useRef } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { API } from '../../api';
+import { API, PF } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function Share() {
@@ -86,7 +86,7 @@ export default function Share() {
           >
             <Stack direction='row' spacing={2}>
               <Link to={`/profile/${user.user._id}`}>
-                <Avatar alt='Adiyogi' src='/assets/image1.png' />
+                <Avatar alt='Adiyogi' src={PF + user?.user?.profilePicture} />
               </Link>
               <TextField
                 id='outlined-basic'

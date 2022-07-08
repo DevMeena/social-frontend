@@ -13,18 +13,26 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import { format, render, cancel, register } from 'timeago.js';
 import { API, PF } from '../../api';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useFetch } from '../../useFetch';
 
 const Post = ({ post }) => {
   // console.log(post?.likes.length);
 
+  // const { id } = useParams();
+
+  const { loading, data, error } = useFetch(`/user/${post?.userId}`);
+
+  console.log(data);
+
   var imageurl = post
     ? `${API}/post/photo/${post?._id}`
-    : `https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg`;
+    : `https://bitsofco.de/content/images/2018/12/broken-1.png`;
 
   const { user } = useContext(AuthContext);
   console.log(post?.likes.length);
@@ -64,14 +72,14 @@ const Post = ({ post }) => {
     console.log(post?.userId);
     const data = user?.user._id;
     axios
-      .delete(`${API}/post/${post?._id}`, data, headers)
+      .delete(`${API}/post/${post?._id}`, headers)
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((e) => {
         console.log(e);
       });
-    // window.location.reload();
   };
 
   return (
@@ -82,8 +90,8 @@ const Post = ({ post }) => {
             <Avatar
               sx={{ bgcolor: 'red' }}
               aria-label='recipe'
-              // src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-              src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1657092625~exp=1657093225~hmac=4dd9cb5fab08231c7ba6e15a30778b8728965fe258d568ef23f468dc5480936e&w=740'
+              src={PF + data?.profilePicture}
+              // src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1657092625~exp=1657093225~hmac=4dd9cb5fab08231c7ba6e15a30778b8728965fe258d568ef23f468dc5480936e&w=740'
             ></Avatar>
           </Link>
         }
@@ -92,8 +100,8 @@ const Post = ({ post }) => {
             <MoreVert />
           </IconButton>
         }
-        title='John Doe'
-        subheader={post.date}
+        title={data?.name}
+        subheader={format(post?.createdAt)}
       />
       <CardMedia
         component='img'

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { API } from '../../api';
+import { useParams } from 'react-router-dom';
 
 export default function Rightbar({ profile }) {
   const HomeRightbar = () => {
@@ -34,17 +35,20 @@ export default function Rightbar({ profile }) {
     const headers = {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     };
-    const userId = '62b6af9ab8e3051a8fd92e96';
+    // const userId = '62b6af9ab8e3051a8fd92e96';
+    const { id } = useParams();
+
     const currentUser = data;
 
     useEffect(() => {
-      setFollowed(currentUser?.followings.includes(userId));
-    }, [currentUser, userId]);
+      setFollowed(currentUser?.followings.includes(id));
+    }, [currentUser, id]);
 
     const follow = async (e) => {
       console.log(e.target.value);
       try {
-        await axios.put(API + `/user/${userId}/follow`, {}, headers);
+        await axios.put(API + `/user/${id}/follow`, {}, headers);
+        window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -55,7 +59,8 @@ export default function Rightbar({ profile }) {
     const unfollow = async (e) => {
       console.log(e.target.value);
       try {
-        await axios.put(API + `/user/${userId}/unfollow`, {}, headers);
+        await axios.put(API + `/user/${id}/unfollow`, {}, headers);
+        window.location.reload();
       } catch (e) {
         console.log(e);
       }

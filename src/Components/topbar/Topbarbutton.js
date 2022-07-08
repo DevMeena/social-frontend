@@ -11,7 +11,7 @@ import { Face, Logout, ManageAccounts, Settings } from '@mui/icons-material';
 import { logoutCall } from '../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { API } from '../../api';
+import { API, PF } from '../../api';
 
 export default function Topbarbutton() {
   const [clicked, setClicked] = useState(false);
@@ -42,7 +42,7 @@ export default function Topbarbutton() {
   return (
     <>
       <img
-        src='assets/image1.png'
+        src={PF + user?.user?.profilePicture}
         alt='dp'
         className='topbarImg'
         onClick={() => setClicked(!clicked)}
