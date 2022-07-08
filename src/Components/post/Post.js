@@ -68,18 +68,20 @@ const Post = ({ post }) => {
   }, [like, isLiked, post, user]); // like, isLiked,
 
   const deletePost = () => {
-    console.log(user?.user._id);
-    console.log(post?.userId);
-    const data = user?.user._id;
-    axios
-      .delete(`${API}/post/${post?._id}`, headers)
-      .then((res) => {
-        console.log(res);
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (window.confirm('Delete this account?')) {
+      console.log(user?.user._id);
+      console.log(post?.userId);
+      const data = user?.user._id;
+      axios
+        .delete(`${API}/post/${post?._id}`, headers)
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
 
   return (

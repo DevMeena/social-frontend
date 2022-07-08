@@ -5,10 +5,19 @@ import Post from '../post/Post';
 import Share from '../share/Share';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { Posts } from '../../dummyData';
+import { useParams } from 'react-router-dom';
 
 export default function Feed() {
-  const { data, loading, error, refetch } = useFetch(`/post/timeline/all`);
+  const { id } = useParams();
+  var url = `/post/timeline/all`;
+  if (id) {
+    url = url + '/' + id;
+  }
 
+  console.log('THIS IS URL', url);
+
+  const { data, loading, error, refetch } = useFetch(url);
+  console.log(data);
   return loading ? (
     <Backdrop
       styles={{

@@ -79,6 +79,16 @@ export default function Rightbar({ profile }) {
         {profile && profile?.followers.map((p) => <h6>{p}</h6>)}
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
+            <span className='rightbarInfoKey'>followers:</span>
+            <span className='rightbarInfoValue'>69</span>
+          </div>
+
+          <div className='rightbarInfoItem'>
+            <span className='rightbarInfoKey'>following:</span>
+            <span className='rightbarInfoValue'>69</span>
+          </div>
+
+          <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>City:</span>
             <span className='rightbarInfoValue'>New York</span>
           </div>
@@ -89,6 +99,14 @@ export default function Rightbar({ profile }) {
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>Relationship:</span>
             <span className='rightbarInfoValue'>Single</span>
+          </div>
+          <div className='rightbarInfoItem'>
+            <span className='rightbarInfoKey'>Birthday:</span>
+            <span className='rightbarInfoValue'>01/01/2001</span>
+          </div>
+          <div className='rightbarInfoItem'>
+            <span className='rightbarInfoKey'>Joined:</span>
+            <span className='rightbarInfoValue'>1 month ago</span>
           </div>
         </div>
         <h4 className='rightbarTitle'>User friends</h4>
