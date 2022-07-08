@@ -31,7 +31,10 @@ const Test = () => {
 
     if (file) {
       const data = new FormData();
-      const fileName = Date.now() + file.name;
+      // console.log();
+      const fileName =
+        'profile' + user?.user._id + '.' + file.name.split('.')[1];
+      // const fileName = Date.now() + file.name;
       data.append('name', fileName);
       data.append('file', file);
       newPost.profilePicture = fileName;
@@ -45,7 +48,9 @@ const Test = () => {
 
     if (file2) {
       const data = new FormData();
-      const fileName = Date.now() + file2.name;
+      const fileName =
+        'cover' + user?.user._id + '.' + file2.name.split('.')[1];
+      // const fileName = Date.now() + file2.name;
       data.append('name', fileName);
       data.append('file', file2);
       newPost.coverPicture = fileName;
