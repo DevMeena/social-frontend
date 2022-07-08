@@ -44,6 +44,7 @@ export default function Topbarbutton() {
       <img
         src={PF + user?.user?.profilePicture}
         alt='dp'
+        style={{ padding: '1px', background: 'gray' }}
         className='topbarImg'
         onClick={() => setClicked(!clicked)}
       />
