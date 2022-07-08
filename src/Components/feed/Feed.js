@@ -29,7 +29,7 @@ export default function Feed() {
       <CircularProgress color='inherit' />
     </Backdrop>
   ) : (
-    <Box sx={{ flex: '5.5' }}>
+    <Box sx={{ flex: '4.5' }}>
       <Share />
       {data && data.map((post) => <Post key={post?._id} post={post} />)}
     </Box>

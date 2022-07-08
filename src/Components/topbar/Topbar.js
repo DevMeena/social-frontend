@@ -1,5 +1,5 @@
 import './topbar.css';
-import { Person, Search, Chat, Notifications } from '@mui/icons-material';
+import { Person, Search, Chat, Notifications, Home } from '@mui/icons-material';
 import Topbarbutton from './Topbarbutton';
 
 export default function Topbar() {
@@ -18,9 +18,16 @@ export default function Topbar() {
         </div>
       </div>
       <div className='topbarRight'>
-        <div className='topbarLinks'>
+        {/* <div className='topbarLinks'>
           <span className='topbarLink'>Homepage</span>
-          <span className='topbarLink'>Timeline</span>
+          <span className='topbarLink'>
+            
+          </span>
+        </div> */}
+        <div className='topbarIcons'>
+          <div className='topbarIconItem'>
+            <Home />
+          </div>
         </div>
         <div className='topbarIcons'>
           <div className='topbarIconItem'>

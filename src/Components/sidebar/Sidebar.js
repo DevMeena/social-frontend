@@ -35,9 +35,9 @@ export default function Sidebar() {
   return (
     <Box
       sx={{
-        flex: '3',
+        flex: '1.5',
         height: '90vh',
-        overflowY: 'scroll',
+        // overflowY: 'scroll',
         position: 'sticky',
         top: '50px',
       }}
@@ -45,7 +45,12 @@ export default function Sidebar() {
       <Box>
         <List
           className='SidebarList'
-          sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}
+          sx={{
+            width: '100%',
+            maxWidth: 200,
+            marginLeft: '10px',
+            bgcolor: 'background.paper',
+          }}
           component='nav'
           aria-labelledby='nested-list-subheader'
         >
@@ -70,12 +75,12 @@ export default function Sidebar() {
             <ListItemText primary='Videos' />
           </ListItemButton>
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <Group />
             </ListItemIcon>
             <ListItemText primary='Groups' />
-          </ListItemButton>
+          </ListItemButton> */}
 
           <ListItemButton>
             <ListItemIcon>
@@ -91,12 +96,12 @@ export default function Sidebar() {
             <ListItemText primary='Questions' />
           </ListItemButton>
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <Work />
             </ListItemIcon>
             <ListItemText primary='Jobs' />
-          </ListItemButton>
+          </ListItemButton> */}
 
           <ListItemButton>
             <ListItemIcon>
@@ -105,7 +110,7 @@ export default function Sidebar() {
             <ListItemText primary='Events' />
           </ListItemButton>
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <CastForEducation />
             </ListItemIcon>
@@ -145,9 +150,9 @@ export default function Sidebar() {
               <CastForEducation />
             </ListItemIcon>
             <ListItemText primary='Courses' />
-          </ListItemButton>
+          </ListItemButton> */}
 
-          <ListItemButton onClick={handleClick}>
+          {/* <ListItemButton onClick={handleClick}>
             <ListItemIcon>
               <MiscellaneousServices />
             </ListItemIcon>
@@ -163,7 +168,7 @@ export default function Sidebar() {
                 <ListItemText primary='Starred' />
               </ListItemButton>
             </List>
-          </Collapse>
+          </Collapse> */}
         </List>
       </Box>
     </Box>

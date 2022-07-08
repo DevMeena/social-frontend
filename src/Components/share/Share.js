@@ -98,7 +98,7 @@ export default function Share() {
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
                 name='desc'
-                required
+                // required
               />
             </Stack>
           </Box>

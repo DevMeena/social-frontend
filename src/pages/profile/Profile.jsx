@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useFetch } from '../../useFetch';
 import './profile.css';
 import { useParams } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 
 export default function Profile() {
   // const [followed, setFollowed] = useState(false);
@@ -33,7 +34,9 @@ export default function Profile() {
 
   return (
     <>
+      <CssBaseline />
       <Topbar />
+
       <div className='profile'>
         <Sidebar />
         <div className='profileRight'>

@@ -30,9 +30,7 @@ const Post = ({ post }) => {
 
   console.log(data);
 
-  var imageurl = post
-    ? `${API}/post/photo/${post?._id}`
-    : `https://bitsofco.de/content/images/2018/12/broken-1.png`;
+  var imageurl = post?.photo ? `${API}/post/photo/${post?._id}` : '';
 
   const { user } = useContext(AuthContext);
   console.log(post?.likes.length);
@@ -105,12 +103,14 @@ const Post = ({ post }) => {
         title={data?.name}
         subheader={format(post?.createdAt)}
       />
-      <CardMedia
-        component='img'
-        height='20%'
-        image={imageurl}
-        alt='Paella dish'
-      />
+      {imageurl && (
+        <CardMedia
+          component='img'
+          height='20%'
+          image={imageurl}
+          alt='Paella dish'
+        />
+      )}
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
           {post?.desc}
