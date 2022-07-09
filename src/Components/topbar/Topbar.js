@@ -8,7 +8,7 @@ export default function Topbar() {
 
   return (
     <div className='topbarContainer'>
-      <div className='topbarLeft'>
+      <div className='topbarLeft' onClick={() => window.scroll(0, 0)}>
         <span className='logo'>ConnectBook</span>
       </div>
       <div className='topbarCenter'>
