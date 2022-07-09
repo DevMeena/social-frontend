@@ -5,3 +5,12 @@
   margin-top: -50px;
   margin-left: -50px;
 }
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

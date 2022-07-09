@@ -10,6 +10,7 @@ import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import Test from './Test.js';
+import Fol from './Components/share/Fol.js';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -34,6 +35,7 @@ function App() {
             <Route exact path='/test' element={<Test />}></Route>
 
             <Route element={<PrivateRoute />}>
+              <Route exact path='/editpost/:postId' element={<Fol />}></Route>
               <Route exact path='/home' element={<Home />}></Route>
               <Route exact path='/profile/:id' element={<Profile />}></Route>
               <Route exact path='/reset' element={<ResetPassword />}></Route>

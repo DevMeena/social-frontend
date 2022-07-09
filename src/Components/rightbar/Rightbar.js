@@ -7,6 +7,7 @@ import axios from 'axios';
 import { API } from '../../api';
 import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import { format, render, cancel, register } from 'timeago.js';
 
 export default function Rightbar({ profile, refresh }) {
   const HomeRightbar = () => {
@@ -50,6 +51,15 @@ export default function Rightbar({ profile, refresh }) {
     // user?.user?.followings?.includes(id)
 
     console.log(followed);
+
+    function formatDate(input) {
+      var datePart = input.match(/\d+/g),
+        year = datePart[0],
+        month = datePart[1],
+        day = datePart[2];
+
+      return day + '/' + month + '/' + year;
+    }
 
     // useEffect(() => {
     //   setFollowed(user?.user?.followings?.includes(id));
@@ -106,33 +116,46 @@ export default function Rightbar({ profile, refresh }) {
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>followers:</span>
-            <span className='rightbarInfoValue'>69</span>
+            <span className='rightbarInfoValue'>
+              {' '}
+              {profile?.followers.length}{' '}
+            </span>
           </div>
 
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>following:</span>
-            <span className='rightbarInfoValue'>69</span>
+            <span className='rightbarInfoValue'>
+              {profile?.followings.length}
+            </span>
           </div>
 
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>City:</span>
-            <span className='rightbarInfoValue'>New York</span>
+            <span className='rightbarInfoValue'>{profile?.city}</span>
           </div>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>From:</span>
-            <span className='rightbarInfoValue'>Madrid</span>
+            <span className='rightbarInfoValue'>{profile?.from}</span>
+          </div>
+          <div className='rightbarInfoItem'>
+            <span className='rightbarInfoKey'>Gender:</span>
+            <span className='rightbarInfoValue'>{profile?.gender}</span>
           </div>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>Relationship:</span>
-            <span className='rightbarInfoValue'>Single</span>
+            <span className='rightbarInfoValue'> {profile?.relationship} </span>
           </div>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>Birthday:</span>
-            <span className='rightbarInfoValue'>01/01/2001</span>
+            <span className='rightbarInfoValue'>
+              {formatDate(profile?.birthDay.slice(0, 10))}
+            </span>
           </div>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>Joined:</span>
-            <span className='rightbarInfoValue'>1 month ago</span>
+            <span className='rightbarInfoValue'>
+              {format(profile?.createdAt)}
+            </span>
           </div>
         </div>
 

@@ -24,13 +24,13 @@ import { API, PF } from '../../api';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFetch } from '../../useFetch';
 
 const Post = ({ post, refresh }) => {
   const { loading, data, error } = useFetch(`/user/${post?.userId}`);
   console.log(data);
-
+  const navigate = useNavigate();
   var imageurl = post?.photo ? `${API}/post/photo/${post?._id}` : '';
   // const [user, setUser] = useState({});
   const { user } = useContext(AuthContext);
@@ -130,6 +130,9 @@ const Post = ({ post, refresh }) => {
         </div>
       </CardActions>
       <button onClick={deletePost}>delete post</button>
+      <button onClick={(e) => navigate(`/editpost/${post?._id}`)}>
+        edit post
+      </button>
     </Card>
   );
 };

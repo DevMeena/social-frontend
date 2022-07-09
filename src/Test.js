@@ -6,15 +6,39 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import { API } from './api';
 import { useFetch } from './useFetch';
+import TextField from '@mui/material/TextField';
+
+import { Cancel } from '@mui/icons-material';
+
+import {
+  Box,
+  Button,
+  Fab,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Test = () => {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [name, setName] = useState('BIG BRO');
-  const [desc, setdesc] = useState('JAI RAM JI KI');
-  const [from, setfrom] = useState('SUN');
-  const [city, setcity] = useState('SATURN');
-  const [relationship, setrelationship] = useState('ZERO');
+
+  const { loading, data, error } = useFetch(`/user/${user?.user._id}`);
+  console.log(PF);
+  console.log(data);
+
+  const [name, setName] = useState('');
+  const [desc, setdesc] = useState('');
+  const [from, setfrom] = useState('');
+  const [city, setcity] = useState('');
+  const [dob, setDob] = useState(new Date());
+  const [relationship, setrelationship] = useState(0);
+  const [gender, setgender] = useState(0);
   const [file, setFile] = useState(null);
   const [file2, setFile2] = useState(null);
 
@@ -25,8 +49,14 @@ const Test = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const newPost = {
-      name: name,
+    const userData = {
+      name,
+      desc,
+      from,
+      city,
+      relationship,
+      gender,
+      birthDay: dob,
     };
 
     if (file) {
@@ -37,8 +67,8 @@ const Test = () => {
       // const fileName = Date.now() + file.name;
       data.append('name', fileName);
       data.append('file', file);
-      newPost.profilePicture = fileName;
-      console.log(newPost);
+      userData.profilePicture = fileName;
+      console.log(userData);
       try {
         await axios.post(`${API}/upload`, data);
       } catch (err) {
@@ -53,8 +83,8 @@ const Test = () => {
       // const fileName = Date.now() + file2.name;
       data.append('name', fileName);
       data.append('file', file2);
-      newPost.coverPicture = fileName;
-      console.log(newPost);
+      userData.coverPicture = fileName;
+      console.log(userData);
       try {
         await axios.post(`${API}/upload`, data);
       } catch (err) {
@@ -63,20 +93,42 @@ const Test = () => {
     }
 
     try {
-      await axios.put(`${API}/user/${user?.user._id}`, newPost, headers);
+      await axios.put(`${API}/user/${user?.user._id}`, userData, headers);
       //   window.location.reload();
     } catch (err) {
       console.log(err);
     }
   };
 
-  const { loading, data, error } = useFetch(`/user/${user?.user._id}`);
-  console.log(PF);
-  console.log(data);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div>
-      <div>
+      <Typography variant='h2' sx={{ textAlign: 'center', margin: 6 }}>
+        Update {data?.name}'s Profile
+      </Typography>
+      <Box
+        sx={{
+          padding: '7px',
+          width: '85%',
+          margin: 'auto',
+          marginTop: '20px',
+          marginBottom: '20px',
+          webkitBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          mozBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          boxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          borderRadius: '10px',
+        }}
+      >
+        <div
+          style={{
+            marginTop: '20px',
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* <div>
         <h1>{data?.name}</h1>
         <h3>{data?.desc}</h3>
         <h4>{data?.from}</h4>
@@ -95,47 +147,205 @@ const Test = () => {
             />
           </>
         )}
-      </div>
+      </div> */}
 
-      <h1>test</h1>
-      <form>
-        <div>
-          <input type='text' name='name' className='text' placeholder='name' />
-          <input type='text' name='desc' className='text' placeholder='desc' />
-          <input type='text' name='city' className='text' placeholder='city' />
-          <input type='text' name='from' className='text' placeholder='from' />
-          <input
-            type='text'
-            name='relationship'
-            className='text'
-            placeholder='relationship'
-          />
+          <form>
+            <div
+              style={{
+                marginTop: 10,
+                marginBottom: 10,
+                width: '40vw',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <FormControl fullWidth>
+                <TextField
+                  style={{ margin: 10 }}
+                  id='outlined-basic'
+                  label='name'
+                  type='text'
+                  variant='outlined'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <TextField
+                  style={{ margin: 10 }}
+                  id='outlined-basic'
+                  label='description'
+                  type='text'
+                  variant='outlined'
+                  value={desc}
+                  onChange={(e) => setdesc(e.target.value)}
+                />
+                <TextField
+                  style={{ margin: 10 }}
+                  id='outlined-basic'
+                  label='country'
+                  type='text'
+                  variant='outlined'
+                  value={from}
+                  onChange={(e) => setfrom(e.target.value)}
+                />
+                <TextField
+                  style={{ margin: 10 }}
+                  id='outlined-basic'
+                  label='city'
+                  type='text'
+                  variant='outlined'
+                  value={city}
+                  onChange={(e) => setcity(e.target.value)}
+                />
+
+                <FormControl style={{ margin: 10 }}>
+                  <InputLabel id='demo-simple-select-label'>
+                    Relationship
+                  </InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={relationship}
+                    label='Age'
+                    onChange={(e) => setrelationship(e.target.value)}
+                  >
+                    <MenuItem value={1}>Single</MenuItem>
+                    <MenuItem value={2}>Married</MenuItem>
+                    <MenuItem value={3}>Dating</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <FormControl style={{ margin: 10 }}>
+                  <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={gender}
+                    label='Age'
+                    onChange={(e) => setgender(e.target.value)}
+                  >
+                    <MenuItem value={1}>Male</MenuItem>
+                    <MenuItem value={2}>Female</MenuItem>
+                    <MenuItem value={3}>Others</MenuItem>
+                  </Select>
+                </FormControl>
+
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <DatePicker
+                    selected={dob}
+                    onChange={(date) => setDob(date)}
+                  />
+                </div>
+
+                <div style={{ margin: 10 }}>
+                  {file && (
+                    <div className='shareImgContainer'>
+                      <img
+                        className='shareImg'
+                        src={URL.createObjectURL(file)}
+                        alt=''
+                      />
+                      <Cancel
+                        className='shareCancelImg'
+                        onClick={() => setFile(null)}
+                      />
+                    </div>
+                  )}
+
+                  <label htmlFor='dp'>
+                    <input
+                      style={{ display: 'none' }}
+                      type='file'
+                      name='dp'
+                      className='dp'
+                      placeholder='dp'
+                      id='dp'
+                      accept='.png,.jpeg,.jpg'
+                      onChange={(e) => setFile(e.target.files[0])}
+                    />
+
+                    <Button
+                      color='secondary'
+                      fullWidth
+                      variant='outlined'
+                      component='span'
+                    >
+                      Change Profile Photo
+                    </Button>
+                  </label>
+                </div>
+                <div style={{ margin: 10 }}>
+                  {file2 && (
+                    <div className='shareImgContainer'>
+                      <img
+                        className='shareImg'
+                        src={URL.createObjectURL(file2)}
+                        alt=''
+                      />
+                      <Cancel
+                        className='shareCancelImg'
+                        onClick={() => setFile2(null)}
+                      />
+                    </div>
+                  )}
+
+                  <label htmlFor='cp'>
+                    <input
+                      style={{ display: 'none' }}
+                      type='file'
+                      name='cp'
+                      id='cp'
+                      className='text'
+                      placeholder='cp'
+                      accept='.png,.jpeg,.jpg'
+                      onChange={(e) => setFile2(e.target.files[0])}
+                    />
+
+                    <Button
+                      fullWidth
+                      // style={{ margin: 10 }}
+                      color='secondary'
+                      variant='outlined'
+                      component='span'
+                    >
+                      Change Cover Photo
+                    </Button>
+                  </label>
+                </div>
+
+                <Button
+                  style={{ marginTop: 20 }}
+                  type='submit'
+                  color='primary'
+                  variant='contained'
+                  fullWidth
+                  onClick={submitHandler}
+                >
+                  update
+                </Button>
+              </FormControl>
+            </div>
+          </form>
         </div>
-        <div>
-          <input
-            type='file'
-            name='dp'
-            className='text'
-            placeholder='dp'
-            id='file'
-            accept='.png,.jpeg,.jpg'
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-          <input
-            type='file'
-            name='cp'
-            className='text'
-            placeholder='cp'
-            id='file'
-            accept='.png,.jpeg,.jpg'
-            onChange={(e) => setFile2(e.target.files[0])}
-          />
-        </div>
-        <button type='submit' onClick={submitHandler}>
-          submit
-        </button>
-      </form>
+      </Box>
     </div>
   );
 };
 export default Test;
+
+// const [name, setName] = useState(data?.name);
+//   const [desc, setdesc] = useState(data?.desc);
+//   const [from, setfrom] = useState(data?.from);
+//   const [city, setcity] = useState(data?.city);
+//   const [dob, setDob] = useState(data?.birthDay);
+//   const [relationship, setrelationship] = useState(data?.relationship);
+//   const [gender, setgender] = useState(data?.gender);
+//   const [file, setFile] = useState(data?.profilePicture);
+//   const [file2, setFile2] = useState(data?.coverPicture);
