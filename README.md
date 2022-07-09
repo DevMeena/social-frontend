@@ -8,6 +8,7 @@
 4. Edit Profile Page (form)
 5. Make Navbar functional and link all routes
 6. Search Feature and Page
+7. Add Modal for images
 
 ## Misc:
 
