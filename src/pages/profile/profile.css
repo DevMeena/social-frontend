@@ -39,10 +39,12 @@
 
 .profileInfoName {
   font-size: 24px;
+  margin: 10px;
 }
 
 .profileInfoDesc {
   font-weight: 300;
+  margin-bottom: 15px;
 }
 
 .profileRightBottom {

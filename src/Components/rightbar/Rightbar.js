@@ -6,8 +6,9 @@ import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { API } from '../../api';
 import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 
-export default function Rightbar({ profile }) {
+export default function Rightbar({ profile, refresh }) {
   const HomeRightbar = () => {
     return (
       <div>
@@ -30,25 +31,38 @@ export default function Rightbar({ profile }) {
 
   const ProfileRightbar = ({ data }) => {
     const { id } = useParams();
-    const [followed, setFollowed] = useState(data?.followings.includes(id));
-    const { user } = useContext(AuthContext);
+    const { user, dispatch } = useContext(AuthContext);
     const token = user?.token;
+    // user?.user?.followings.includes(id)
     const headers = {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     };
     // const userId = '62b6af9ab8e3051a8fd92e96';
 
-    const currentUser = data;
-    console.log(currentUser?.followings.includes(user?.user?._id));
-    useEffect(() => {
-      setFollowed(currentUser?.followings.includes(user?.user?._id));
-    }, [currentUser, user?.user?._id]);
+    console.log(user?.user);
+    console.log(user?.user?.followings.includes(id));
+    console.log('FOLLOWINGS ', user?.user?.followings);
+    console.log(profile);
+    console.log(id);
+    const [followed, setFollowed] = useState(
+      profile?.followers.includes(user?.user?._id)
+    );
+    // user?.user?.followings?.includes(id)
+
+    console.log(followed);
+
+    // useEffect(() => {
+    //   setFollowed(user?.user?.followings?.includes(id));
+    // }, [user?.user?.followings, id]);
 
     const follow = async (e) => {
       console.log(e.target.value);
       try {
         await axios.put(API + `/user/${id}/follow`, {}, headers);
-        window.location.reload();
+        // dispatch({ type: 'FOLLOW', payload: id });
+        refresh();
+        setFollowed(!followed);
+        // window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -60,7 +74,10 @@ export default function Rightbar({ profile }) {
       console.log(e.target.value);
       try {
         await axios.put(API + `/user/${id}/unfollow`, {}, headers);
-        window.location.reload();
+        // dispatch({ type: 'UNFOLLOW', payload: id });
+        refresh();
+        setFollowed(!followed);
+        // window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -72,15 +89,19 @@ export default function Rightbar({ profile }) {
 
         {followed && <h3> YOU FOLLOWING THIS USER </h3>}
 
-        {/* {followed ? ( */}
-        <button value='62adf725fff3590e9d18cc14' onClick={unfollow}>
-          unfollow
-        </button>
-        {/* ) : ( */}
-        <button value='62adf725fff3590e9d18cc14' onClick={follow}>
-          follow
-        </button>
-        {/* )} */}
+        {id !== user?.user._id && (
+          <>
+            {!followed ? (
+              <Button variant='outlined' onClick={follow}>
+                follow
+              </Button>
+            ) : (
+              <Button variant='contained' onClick={unfollow}>
+                unfollow
+              </Button>
+            )}
+          </>
+        )}
 
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
