@@ -1,8 +1,11 @@
 import './topbar.css';
 import { Person, Search, Chat, Notifications, Home } from '@mui/icons-material';
 import Topbarbutton from './Topbarbutton';
+import { useNavigate } from 'react-router-dom';
 
 export default function Topbar() {
+  const navigate = useNavigate();
+
   return (
     <div className='topbarContainer'>
       <div className='topbarLeft'>
@@ -24,17 +27,18 @@ export default function Topbar() {
             
           </span>
         </div> */}
-        <div className='topbarIcons'>
+        <div className='topbarIcons' onClick={(e) => navigate('/home')}>
           <div className='topbarIconItem'>
-            <Home />
+            {/* <Home /> */}
+            Timeline
           </div>
         </div>
-        <div className='topbarIcons'>
+        {/* <div className='topbarIcons'>
           <div className='topbarIconItem'>
             <Person />
             <span className='topbarIconBadge'>1</span>
           </div>
-        </div>
+        </div> */}
         <div className='topbarIcons'>
           <div className='topbarIconItem'>
             <Chat />

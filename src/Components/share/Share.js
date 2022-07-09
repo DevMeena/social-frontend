@@ -4,6 +4,7 @@ import {
   PermMedia,
   Room,
   Send,
+  Cancel,
 } from '@mui/icons-material';
 import {
   Avatar,
@@ -18,11 +19,12 @@ import axios from 'axios';
 import React, { useRef } from 'react';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { API, PF } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
+import './share.css';
 
-export default function Share() {
+export default function Share({ refresh }) {
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [desc, setDesc] = useState('');
@@ -53,11 +55,13 @@ export default function Share() {
       .post(`${API}/post`, fromData, headers)
       .then((res) => {
         console.log(res);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => {
         console.log(err);
       });
+
+    refresh();
 
     setDesc('');
     setFile(null);
@@ -76,6 +80,12 @@ export default function Share() {
         borderRadius: '10px',
       }}
     >
+      {file && (
+        <div className='shareImgContainer'>
+          <img className='shareImg' src={URL.createObjectURL(file)} alt='' />
+          <Cancel className='shareCancelImg' onClick={() => setFile(null)} />
+        </div>
+      )}
       <form className='shareBottom' onSubmit={submitHandler}>
         <Box>
           <Box

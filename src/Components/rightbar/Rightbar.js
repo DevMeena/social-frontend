@@ -29,20 +29,20 @@ export default function Rightbar({ profile }) {
   };
 
   const ProfileRightbar = ({ data }) => {
-    const [followed, setFollowed] = useState(false);
+    const { id } = useParams();
+    const [followed, setFollowed] = useState(data?.followings.includes(id));
     const { user } = useContext(AuthContext);
     const token = user?.token;
     const headers = {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     };
     // const userId = '62b6af9ab8e3051a8fd92e96';
-    const { id } = useParams();
 
     const currentUser = data;
-
+    console.log(currentUser?.followings.includes(user?.user?._id));
     useEffect(() => {
-      setFollowed(currentUser?.followings.includes(id));
-    }, [currentUser, id]);
+      setFollowed(currentUser?.followings.includes(user?.user?._id));
+    }, [currentUser, user?.user?._id]);
 
     const follow = async (e) => {
       console.log(e.target.value);
@@ -65,18 +65,23 @@ export default function Rightbar({ profile }) {
         console.log(e);
       }
     };
-
+    // id !== user?.user?._id
     return (
       <>
         <h4 className='rightbarTitle'>User information</h4>
-        <button value='62adf725fff3590e9d18cc14' onClick={follow}>
-          follow
-        </button>
+
+        {followed && <h3> YOU FOLLOWING THIS USER </h3>}
+
+        {/* {followed ? ( */}
         <button value='62adf725fff3590e9d18cc14' onClick={unfollow}>
           unfollow
         </button>
-        <h1>Currently following is : </h1>
-        {profile && profile?.followers.map((p) => <h6>{p}</h6>)}
+        {/* ) : ( */}
+        <button value='62adf725fff3590e9d18cc14' onClick={follow}>
+          follow
+        </button>
+        {/* )} */}
+
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>followers:</span>
@@ -109,7 +114,12 @@ export default function Rightbar({ profile }) {
             <span className='rightbarInfoValue'>1 month ago</span>
           </div>
         </div>
-        <h4 className='rightbarTitle'>User friends</h4>
+
+        <h1>Currently followers are : </h1>
+        {profile && profile?.followers.map((p) => <h6>{p}</h6>)}
+        <h1>Currently following : </h1>
+        {profile && profile?.followings.map((p) => <h6>{p}</h6>)}
+        {/* <h4 className='rightbarTitle'>User friends</h4>
         <div className='rightbarFollowings'>
           <div className='rightbarFollowing'>
             <img
@@ -159,7 +169,7 @@ export default function Rightbar({ profile }) {
             />
             <span className='rightbarFollowingName'>John Carter</span>
           </div>
-        </div>
+        </div> */}
       </>
     );
   };

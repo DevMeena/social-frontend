@@ -20,7 +20,7 @@ export default function Profile() {
   //   setFollowed(currentUser?.followings.includes(user?.user?._id));
   // }, [currentUser, user?.user?._id]);
   // ! actually you have to use params
-  const { loading, data, error } = useFetch(`/user/${id}`);
+  const { loading, data, error, refetch } = useFetch(`/user/${id}`);
 
   // const follow = (e) => {
   //   console.log(e.target.value);
@@ -66,7 +66,7 @@ export default function Profile() {
           </div>
           <div className='profileRightBottom'>
             <Feed />
-            <Rightbar profile={data} />
+            <Rightbar profile={data} refresh={refetch} />
           </div>
         </div>
       </div>

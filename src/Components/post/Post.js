@@ -21,7 +21,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { useFetch } from '../../useFetch';
 
-const Post = ({ post }) => {
+const Post = ({ post, refresh }) => {
   // console.log(post?.likes.length);
 
   // const { id } = useParams();
@@ -57,7 +57,8 @@ const Post = ({ post }) => {
         console.log(e);
       });
 
-    window.location.reload();
+    refresh();
+    // window.location.reload();
   };
   console.log('hello');
   useEffect(() => {
@@ -91,7 +92,6 @@ const Post = ({ post }) => {
               sx={{ bgcolor: 'red' }}
               aria-label='recipe'
               src={PF + data?.profilePicture}
-              // src='https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?t=st=1657092625~exp=1657093225~hmac=4dd9cb5fab08231c7ba6e15a30778b8728965fe258d568ef23f468dc5480936e&w=740'
             ></Avatar>
           </Link>
         }

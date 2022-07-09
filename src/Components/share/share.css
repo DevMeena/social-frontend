@@ -1,0 +1,21 @@
+.shareImgContainer {
+  padding: 20px 20px 20px 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shareImg {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.shareCancelImg {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+}
