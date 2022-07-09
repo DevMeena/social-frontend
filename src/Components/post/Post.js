@@ -1,7 +1,13 @@
 import { Users } from '../../dummyData';
 import './post.css';
 import { useEffect, useState } from 'react';
-import { Favorite, FavoriteBorder, MoreVert, Share } from '@mui/icons-material';
+import {
+  Favorite,
+  FavoriteBorder,
+  MoreVert,
+  Refresh,
+  Share,
+} from '@mui/icons-material';
 import {
   Avatar,
   Card,
@@ -22,32 +28,28 @@ import { Link, useParams } from 'react-router-dom';
 import { useFetch } from '../../useFetch';
 
 const Post = ({ post, refresh }) => {
-  // console.log(post?.likes.length);
-
-  // const { id } = useParams();
-
   const { loading, data, error } = useFetch(`/user/${post?.userId}`);
-
   console.log(data);
 
   var imageurl = post?.photo ? `${API}/post/photo/${post?._id}` : '';
-
+  // const [user, setUser] = useState({});
   const { user } = useContext(AuthContext);
   console.log(post?.likes.length);
-  const [like, setLike] = useState(0); //post.like
+
+  const [like, setLike] = useState(post?.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+
   const token = user?.token;
   const userId = user?.user._id;
+
   const headers = { headers: { Authorization: `Bearer ${token}` } };
-  // console.log(headers.headers);
+
+  useEffect(() => {
+    // setLike(post?.likes.length);
+    setIsLiked(post?.likes.includes(user?.user._id));
+  }, [post?.likes, user?.user._id]); // like, isLiked,
+
   const likeHandler = () => {
-    // if (isLiked) {
-    //   setLike(like - 1);
-    //   setIsLiked(!isLiked);
-    // } else {
-    //   setLike(like + 1);
-    //   setIsLiked(!isLiked);
-    // }
     axios
       .put(`${API}/post/${post?._id}/like`, { userId: user?.user._id }, headers)
       .then((res) => {
@@ -56,26 +58,20 @@ const Post = ({ post, refresh }) => {
       .catch((e) => {
         console.log(e);
       });
-
-    refresh();
-    // window.location.reload();
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
   };
   console.log('hello');
-  useEffect(() => {
-    setLike(post?.likes.length);
-    setIsLiked(post?.likes.includes(user?.user._id));
-  }, [like, isLiked, post, user]); // like, isLiked,
 
   const deletePost = () => {
-    if (window.confirm('Delete this account?')) {
+    if (window.confirm('Delete this post?')) {
       console.log(user?.user._id);
       console.log(post?.userId);
-      const data = user?.user._id;
       axios
         .delete(`${API}/post/${post?._id}`, headers)
         .then((res) => {
           console.log(res);
-          window.location.reload();
+          refresh();
         })
         .catch((e) => {
           console.log(e);
