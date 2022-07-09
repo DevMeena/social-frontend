@@ -7,7 +7,7 @@
 3. Edit Post page (form)
 4. Edit Profile Page (form)
 5. Make Navbar functional and link all routes
-   6 Search Feature and Page
+6. Search Feature and Page
 
 ## Misc:
 
@@ -24,4 +24,6 @@
 4. Notifications
    ...
 
-### `ADD CHAT APP` (DMs in)
+### `ADD CHAT APP` (DMs feature)
+
+Encrypt the chat
