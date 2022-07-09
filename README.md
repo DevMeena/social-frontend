@@ -8,7 +8,7 @@
 4. Edit Profile Page (form)
 5. Make Navbar functional and link all routes
 6. Search Feature and Page
-7. Add Modal for images
+7. Add Modal for images (refer here) -> [`https://www.w3schools.com/howto/howto_css_modal_images.asp`]
 
 ## Misc:
 
