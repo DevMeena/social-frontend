@@ -199,14 +199,18 @@ const Test = () => {
                 />
 
                 <FormControl style={{ margin: 10 }}>
-                  <InputLabel id='demo-simple-select-label'>
+                  <InputLabel
+                    id='demo-simple-select-label'
+                    label='relationship'
+                  >
                     Relationship
                   </InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
                     value={relationship}
-                    label='Age'
+                    placeholder='relationship'
+                    label='relationship'
                     onChange={(e) => setrelationship(e.target.value)}
                   >
                     <MenuItem value={1}>Single</MenuItem>
@@ -216,12 +220,15 @@ const Test = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: 10 }}>
-                  <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
+                  <InputLabel id='demo-simple-select-label' label='gender'>
+                    Gender
+                  </InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
                     value={gender}
-                    label='Age'
+                    placeholder='gender'
+                    label='gender'
                     onChange={(e) => setgender(e.target.value)}
                   >
                     <MenuItem value={1}>Male</MenuItem>
