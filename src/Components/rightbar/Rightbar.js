@@ -53,7 +53,8 @@ export default function Rightbar({ profile, refresh }) {
     console.log(followed);
 
     function formatDate(input) {
-      var datePart = input.match(/\d+/g),
+      if (!input) return 'yet to born';
+      var datePart = input?.match(/\d+/g),
         year = datePart[0],
         month = datePart[1],
         day = datePart[2];
@@ -148,7 +149,7 @@ export default function Rightbar({ profile, refresh }) {
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>Birthday:</span>
             <span className='rightbarInfoValue'>
-              {formatDate(profile?.birthDay.slice(0, 10))}
+              {formatDate(profile?.birthDay?.slice(0, 10))}
             </span>
           </div>
           <div className='rightbarInfoItem'>
