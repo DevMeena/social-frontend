@@ -32,15 +32,15 @@ const Test = () => {
   console.log(PF);
   console.log(data);
 
-  const [name, setName] = useState('');
-  const [desc, setdesc] = useState('');
-  const [from, setfrom] = useState('');
-  const [city, setcity] = useState('');
-  const [dob, setDob] = useState(new Date());
-  const [relationship, setrelationship] = useState(0);
-  const [gender, setgender] = useState(0);
-  const [file, setFile] = useState(null);
-  const [file2, setFile2] = useState(null);
+  const [name, setName] = useState(data?.name);
+  const [desc, setdesc] = useState(data?.desc);
+  const [from, setfrom] = useState(data?.from);
+  const [city, setcity] = useState(data?.city);
+  const [dob, setDob] = useState(data?.birthDay);
+  const [relationship, setrelationship] = useState(data?.relationship);
+  const [gender, setgender] = useState(data?.gender);
+  const [file, setFile] = useState(data?.profilePicture);
+  const [file2, setFile2] = useState(data?.coverPicture);
 
   const token = user.token;
   const headers = {
@@ -356,3 +356,13 @@ export default Test;
 //   const [gender, setgender] = useState(data?.gender);
 //   const [file, setFile] = useState(data?.profilePicture);
 //   const [file2, setFile2] = useState(data?.coverPicture);
+
+// const [name, setName] = useState('');
+// const [desc, setdesc] = useState('');
+// const [from, setfrom] = useState('');
+// const [city, setcity] = useState('');
+// const [dob, setDob] = useState(new Date());
+// const [relationship, setrelationship] = useState(0);
+// const [gender, setgender] = useState(0);
+// const [file, setFile] = useState(null);
+// const [file2, setFile2] = useState(null);
