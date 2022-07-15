@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import Test from './Test.js';
 import Fol from './Components/share/Fol.js';
+import Search from './pages/search/search.jsx';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -39,6 +40,7 @@ function App() {
               <Route exact path='/home' element={<Home />}></Route>
               <Route exact path='/profile/:id' element={<Profile />}></Route>
               <Route exact path='/reset' element={<ResetPassword />}></Route>
+              <Route exact path='/search/:key' element={<Search />}></Route>
             </Route>
 
             <Route exact path='/forgot' element={<ForgotPassword />}></Route>

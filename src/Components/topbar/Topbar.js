@@ -2,10 +2,11 @@ import './topbar.css';
 import { Person, Search, Chat, Notifications, Home } from '@mui/icons-material';
 import Topbarbutton from './Topbarbutton';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Topbar() {
   const navigate = useNavigate();
-
+  const [search, setSearch] = useState('');
   return (
     <div className='topbarContainer'>
       <div className='topbarLeft' onClick={() => window.scroll(0, 0)}>
@@ -17,6 +18,11 @@ export default function Topbar() {
           <input
             placeholder='Search for friend or post'
             className='searchInput'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyPress={(e) =>
+              e.key === 'Enter' && navigate('/search/' + search)
+            }
           />
         </div>
       </div>

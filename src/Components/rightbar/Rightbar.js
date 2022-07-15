@@ -4,10 +4,11 @@ import Online from '../online/Online';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
-import { API } from '../../api';
+import { API, PF } from '../../api';
 import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { format, render, cancel, register } from 'timeago.js';
+import { useFetch } from '../../useFetch';
 
 export default function Rightbar({ profile, refresh }) {
   const HomeRightbar = () => {
@@ -35,6 +36,12 @@ export default function Rightbar({ profile, refresh }) {
     const { user, dispatch } = useContext(AuthContext);
     const token = user?.token;
     // user?.user?.followings.includes(id)
+    const { loading: loadFollowers, data: userFollowers } = useFetch(
+      '/user/followers/' + id
+    );
+    const { loading: loadFollowing, data: userFollowings } = useFetch(
+      '/user/followings/' + id
+    );
     const headers = {
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
     };
@@ -160,61 +167,47 @@ export default function Rightbar({ profile, refresh }) {
           </div>
         </div>
 
-        <h1>Currently followers are : </h1>
+        {/* <h1>Currently followers are : </h1>
         {profile && profile?.followers.map((p) => <h6>{p}</h6>)}
         <h1>Currently following : </h1>
-        {profile && profile?.followings.map((p) => <h6>{p}</h6>)}
-        {/* <h4 className='rightbarTitle'>User friends</h4>
-        <div className='rightbarFollowings'>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/1.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
+        {profile && profile?.followings.map((p) => <h6>{p}</h6>)} */}
+
+        <h4 className='rightbarTitle'>show followers:</h4>
+        {loadFollowers ? (
+          <h3>Loading...</h3>
+        ) : (
+          <div className='rightbarFollowings'>
+            {userFollowers &&
+              userFollowers.map((f) => (
+                <div className='rightbarFollowing' key={f._id}>
+                  <img
+                    src={PF + f.profilePicture}
+                    alt='follower'
+                    className='rightbarFollowingImg'
+                  />
+                  <span className='rightbarFollowingName'>{f.name}</span>
+                </div>
+              ))}
           </div>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/2.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
+        )}
+        <h4 className='rightbarTitle'>show followings:</h4>
+        {loadFollowing ? (
+          <h3>Loading...</h3>
+        ) : (
+          <div className='rightbarFollowings'>
+            {userFollowings &&
+              userFollowings.map((f) => (
+                <div className='rightbarFollowing' key={f._id}>
+                  <img
+                    src={PF + f.profilePicture}
+                    alt='following'
+                    className='rightbarFollowingImg'
+                  />
+                  <span className='rightbarFollowingName'>{f.name}</span>
+                </div>
+              ))}
           </div>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/3.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
-          </div>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/4.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
-          </div>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/5.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
-          </div>
-          <div className='rightbarFollowing'>
-            <img
-              src='assets/person/6.jpeg'
-              alt=''
-              className='rightbarFollowingImg'
-            />
-            <span className='rightbarFollowingName'>John Carter</span>
-          </div>
-        </div> */}
+        )}
       </>
     );
   };
