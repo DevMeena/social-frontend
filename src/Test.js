@@ -213,9 +213,9 @@ const Test = () => {
                     label='relationship'
                     onChange={(e) => setrelationship(e.target.value)}
                   >
-                    <MenuItem value={1}>Single</MenuItem>
-                    <MenuItem value={2}>Married</MenuItem>
-                    <MenuItem value={3}>Dating</MenuItem>
+                    <MenuItem value='Single'>Single</MenuItem>
+                    <MenuItem value='Married'>Married</MenuItem>
+                    <MenuItem value='Dating'>Dating</MenuItem>
                   </Select>
                 </FormControl>
 
@@ -231,9 +231,9 @@ const Test = () => {
                     label='gender'
                     onChange={(e) => setgender(e.target.value)}
                   >
-                    <MenuItem value={1}>Male</MenuItem>
-                    <MenuItem value={2}>Female</MenuItem>
-                    <MenuItem value={3}>Others</MenuItem>
+                    <MenuItem value='Male'>Male</MenuItem>
+                    <MenuItem value='Female'>Female</MenuItem>
+                    <MenuItem value='Others'>Others</MenuItem>
                   </Select>
                 </FormControl>
 
