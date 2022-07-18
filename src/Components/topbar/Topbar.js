@@ -46,7 +46,10 @@ export default function Topbar() {
           </div>
         </div> */}
         <div className='topbarIcons'>
-          <div className='topbarIconItem'>
+          <div
+            className='topbarIconItem'
+            onClick={(e) => navigate('/messenger')}
+          >
             <Chat />
             <span className='topbarIconBadge'>2</span>
           </div>

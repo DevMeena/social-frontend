@@ -26,7 +26,7 @@ import { API, PF } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import './share.css';
 
-export default function Fol() {
+export default function EditPost() {
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [desc, setDesc] = useState('');
@@ -113,7 +113,7 @@ export default function Fol() {
                   label="What's in your mind?"
                   variant='standard'
                   sx={{
-                    width: '85%',
+                    width: '90%',
                   }}
                   value={desc}
                   onChange={(e) => setDesc(e.target.value)}
@@ -159,6 +159,16 @@ export default function Fol() {
                     </label>
                   </Stack>
                 </Stack>
+              </Box>
+              <Box>
+                <Button
+                  size='small'
+                  color='secondary'
+                  variant='contained'
+                  onClick={(e) => navigate('/home')}
+                >
+                  Cancel
+                </Button>
               </Box>
               <Box style={{ marginRight: '5%' }}>
                 <Button type='submit' size='small' variant='contained'>

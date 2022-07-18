@@ -3,9 +3,9 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from './context/AuthContext';
-import { API } from './api';
-import { useFetch } from './useFetch';
+import { AuthContext } from '../../context/AuthContext';
+import { API } from '../../api';
+import { useFetch } from '../../useFetch';
 import TextField from '@mui/material/TextField';
 
 import { Cancel } from '@mui/icons-material';
@@ -23,8 +23,9 @@ import {
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+// import { useFetch } from '../../useFetch';
 
-const Test = () => {
+const UpdateProfile = () => {
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -358,7 +359,7 @@ const Test = () => {
     </div>
   );
 };
-export default Test;
+export default UpdateProfile;
 
 // const [name, setName] = useState(data?.name);
 //   const [desc, setdesc] = useState(data?.desc);

@@ -7,16 +7,25 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useState } from 'react';
-import { Face, Logout, ManageAccounts, Settings } from '@mui/icons-material';
+import {
+  Face,
+  Logout,
+  ManageAccounts,
+  Password,
+  Settings,
+} from '@mui/icons-material';
 import { logoutCall } from '../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { API, PF } from '../../api';
+import { useNavigate } from 'react-router-dom';
 
 export default function Topbarbutton() {
   const [clicked, setClicked] = useState(false);
 
   const { user, dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const userId = user?.user._id;
   const token = user?.token;
@@ -57,6 +66,33 @@ export default function Topbarbutton() {
           <nav aria-label='main mailbox folders'>
             <List>
               <ListItem disablePadding>
+                <ListItemButton onClick={(e) => navigate('/profile/' + userId)}>
+                  <ListItemIcon>
+                    <Face />
+                  </ListItemIcon>
+                  <ListItemText primary='Profile' />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton onClick={(e) => navigate('/update')}>
+                  <ListItemIcon>
+                    <Settings />
+                  </ListItemIcon>
+                  <ListItemText primary='Update Account' />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton onClick={(e) => navigate('/reset')}>
+                  <ListItemIcon>
+                    <Password />
+                  </ListItemIcon>
+                  <ListItemText primary='Change Password' />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
                 <ListItemButton onClick={signout}>
                   <ListItemIcon>
                     <Logout />
@@ -66,25 +102,9 @@ export default function Topbarbutton() {
               </ListItem>
 
               <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <Face />
-                  </ListItemIcon>
-                  <ListItemText primary='Profile Picture' />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <ManageAccounts />
-                  </ListItemIcon>
-                  <ListItemText primary='Account' />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
                 <ListItemButton onClick={deleteAccount}>
                   <ListItemIcon>
-                    <Settings />
+                    <ManageAccounts />
                   </ListItemIcon>
                   <ListItemText primary='Delete Account' />
                 </ListItemButton>
