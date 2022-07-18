@@ -12,10 +12,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 // import { useDispatch, useSelector } from 'react-redux';
 // import { register } from '../actions/auth';
-// import { useNavigate } from 'react-router-dom';
 // import { ToastContainer } from 'react-toastify'; //toast
 import 'react-toastify/dist/ReactToastify.css';
 import { API } from '../api';
@@ -55,7 +55,7 @@ export default function SignUpSide() {
   const userId = user?.user._id;
   const token = user?.token;
   const headers = { headers: { Authorization: `Bearer ${token}` } };
-
+  const navigate = useNavigate();
   const signout = () => {
     logoutCall(dispatch);
   };
@@ -185,6 +185,15 @@ export default function SignUpSide() {
               sx={{ mt: 3, mb: 2 }}
             >
               Reset Password
+            </Button>
+            <Button
+              fullWidth
+              variant='contained'
+              color='secondary'
+              sx={{ mb: 2 }}
+              onClick={(e) => navigate('/home')}
+            >
+              go back
             </Button>
           </Box>
         </Box>
