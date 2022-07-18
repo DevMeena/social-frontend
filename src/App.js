@@ -2,6 +2,7 @@ import Home from './pages/home/Home.js';
 import Profile from './pages/profile/Profile';
 import SignInSide from './Components/SignInSide.js';
 import SignUpSide from './Components/SignUpSide.js';
+import Messenger from './pages/messenger/Messenger.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute';
 import ForgotPassword from './Components/ForgotPassword.js';
@@ -31,6 +32,12 @@ function App() {
               exact
               path='/signup'
               element={user ? <Navigate to='/home' /> : <SignUpSide />}
+            ></Route>
+
+            <Route
+              exact
+              path='/messenger'
+              element={user ? <Messenger/> : <Navigate to='/' />}
             ></Route>
 
             <Route exact path='/test' element={<Test />}></Route>
