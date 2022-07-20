@@ -11,6 +11,12 @@ import axios from "axios";
 import { API, PF } from '../../api';
 import { useRef } from "react";
 import { io } from 'socket.io-client';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select
+} from '@mui/material';
 
 const Messenger = () => {
   const [conversations, setConversations] = useState([]);
@@ -19,6 +25,8 @@ const Messenger = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);;
+  const [followingsList, setFollowingsList] = useState([]);
+  const [currentChatName, setCurrentChatName] = useState(null);
   const socket = useRef(io("ws://localhost:8900"));
   const { user } = useContext(AuthContext);
   const token = user.token;
@@ -57,7 +65,17 @@ const Messenger = () => {
       }
     };
     getConversations();
-  }, [user._id]);
+
+    const getFollowings = async () => {
+      try {
+        const res = await axios.get(`${API}/user/followings/${user.user._id}`, headers);
+        setFollowingsList(res.data);
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getFollowings();
+  }, [user]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -98,7 +116,33 @@ const Messenger = () => {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" })
-  },[messages])
+  }, [messages])
+  
+  const handleFollowingChange = async (e) => {
+    let res = await axios.get(`${API}/conversations/find/${user.user._id}/${e.target.value.id}`, headers);
+    if (res.data === null) {
+      res = await axios.post(`${API}/conversations/`, { senderId: user.user._id, receiverId: e.target.value.id }, headers);
+    }
+    const result = conversations.every((c) => {
+      if (c._id === res.data._id) {
+        return false;
+      }
+
+      return true;
+    })
+    if (result) {
+      conversations.push(res.data);
+    }
+    setCurrentChat(res.data);
+    setCurrentChatName(e.target.value.name);
+  }
+
+  const onConversationSelect = async (conversation, user) => {
+    setCurrentChat(conversation);
+    const friendId = conversation.members.find(member => member !== user.user._id);
+    const res = await axios.get(`${API}/user/${friendId}`, headers);
+    setCurrentChatName(res.data.name);
+  }
 
   return (
     <>
@@ -106,9 +150,27 @@ const Messenger = () => {
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
-            {conversations.map((c) => (
-              <div key={c._id} onClick={() => setCurrentChat(c)}>
+            <FormControl style={{ margin: 10 }} className="chatMenuInput">
+              <InputLabel
+                id='demo-simple-select-label'
+                label='relationship'
+              >
+                New Conversation
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                value=""
+                placeholder=''
+                label='New Conversation'
+                onChange={handleFollowingChange}
+              >
+                {followingsList.map((f) => { return <MenuItem value={{ name: f.name, id: f._id}} key={f._id}>{f.name}</MenuItem> }
+                )}
+              </Select>
+            </FormControl>
+            {conversations?.map((c) => (
+              <div key={c._id} onClick={()=>onConversationSelect(c, user)}>
                 <Conversation conversation={c} currentUser={user} />
               </div>
             ))}
@@ -119,6 +181,9 @@ const Messenger = () => {
             {
               currentChat ?
                 <>
+                  <div className="chatName">
+                    {currentChatName}
+                  </div>
                   <div className="chatBoxTop">
                     {messages.map((m) => {
                       return (
@@ -143,7 +208,8 @@ const Messenger = () => {
           <div className="chatOnlineWrapper">
             <ChatOnline onlineUsers={onlineUsers}
               currentId={user.user._id}
-              setCurrentChat = {setCurrentChat}
+              setCurrentChat={setCurrentChat}
+              setCurrentChatName={setCurrentChatName}
             />
           </div>
         </div>

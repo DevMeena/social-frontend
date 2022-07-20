@@ -6,7 +6,7 @@ import { API, PF } from '../../api'
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
-const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
+const ChatOnline = ({onlineUsers, currentId, setCurrentChat, setCurrentChatName}) => {
   const [frineds, setFriends] = useState([]);
   const [onlineFriends, setOnlineFriends] = useState([]);
   const { user } = useContext(AuthContext);
@@ -29,6 +29,7 @@ const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
     try {
       const res = await axios.get(`${API}/conversations/find/${currentId}/${user._id}`, headers);
       setCurrentChat(res.data);
+      setCurrentChatName(user.name);
     } catch (err) {
       
     }
@@ -37,7 +38,7 @@ const ChatOnline = ({onlineUsers, currentId, setCurrentChat}) => {
   return (
     <div className='chatOnline'>
       {onlineFriends.map(o => (
-        <div className="chatOnlineFriend" onClick={() => handleClick(o)}>
+        <div className="chatOnlineFriend" key={o._id} onClick={() => handleClick(o)}>
           <div className="chatOnlineImgContainer">
             <img className='chatOnlineImg' src={o?.profilePicture ? PF+o.profilePicture: PF+"defaultProfile.jpg"} alt="" />
             <div className="chatOnlineBadge"></div>

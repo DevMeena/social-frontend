@@ -14,6 +14,7 @@ import {
   Password,
   Settings,
 } from '@mui/icons-material';
+import Divider from '@mui/material/Divider';
 import { logoutCall } from '../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
@@ -91,6 +92,8 @@ export default function Topbarbutton() {
                   <ListItemText primary='Change Password' />
                 </ListItemButton>
               </ListItem>
+
+              <Divider/>
 
               <ListItem disablePadding>
                 <ListItemButton onClick={signout}>
