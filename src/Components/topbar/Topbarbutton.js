@@ -61,6 +61,12 @@ export default function Topbarbutton() {
 
       {clicked && (
         <Box
+          style={{
+            webkitBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+            mozBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+            boxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+            borderRadius: '5px',
+          }}
           className='topbarImgUl'
           sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}
         >
@@ -93,23 +99,26 @@ export default function Topbarbutton() {
                 </ListItemButton>
               </ListItem>
 
-              <Divider/>
+              <Divider />
 
               <ListItem disablePadding>
                 <ListItemButton onClick={signout}>
                   <ListItemIcon>
-                    <Logout />
+                    <Logout style={{ color: '#CA4E79' }} />
                   </ListItemIcon>
-                  <ListItemText primary='Logout' />
+                  <ListItemText style={{ color: '#CA4E79' }} primary='Logout' />
                 </ListItemButton>
               </ListItem>
 
               <ListItem disablePadding>
                 <ListItemButton onClick={deleteAccount}>
                   <ListItemIcon>
-                    <ManageAccounts />
+                    <ManageAccounts style={{ color: 'red' }} />
                   </ListItemIcon>
-                  <ListItemText primary='Delete Account' />
+                  <ListItemText
+                    style={{ color: 'red' }}
+                    primary='Delete Account'
+                  />
                 </ListItemButton>
               </ListItem>
             </List>

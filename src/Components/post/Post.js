@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Users } from '../../dummyData';
 import './post.css';
 import { useEffect, useState } from 'react';
@@ -19,6 +20,8 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import ModalImage from 'react-modal-image';
 import { format, render, cancel, register } from 'timeago.js';
 import { API, PF } from '../../api';
@@ -27,6 +30,8 @@ import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFetch } from '../../useFetch';
+
+// const options = ['Delete Post', 'Edit Post'];
 
 const Post = ({ post, refresh }) => {
   const { loading, data, error } = useFetch(`/user/${post?.userId}`);
@@ -80,6 +85,15 @@ const Post = ({ post, refresh }) => {
     }
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Card sx={{ margin: 5 }}>
       <CardHeader
@@ -93,13 +107,48 @@ const Post = ({ post, refresh }) => {
           </Link>
         }
         action={
-          <IconButton aria-label='settings'>
-            <MoreVert />
-          </IconButton>
+          post?.userId === userId && (
+            <IconButton
+              aria-label='more'
+              id='long-button'
+              aria-controls={open ? 'long-menu' : undefined}
+              aria-expanded={open ? 'true' : undefined}
+              aria-haspopup='true'
+              onClick={handleClick}
+            >
+              <MoreVert />
+            </IconButton>
+          )
         }
         title={data?.name}
         subheader={format(post?.createdAt)}
       />
+
+      <Menu
+        id='long-menu'
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: 30 * 4.5,
+            width: '20ch',
+          },
+        }}
+      >
+        <MenuItem
+          key='edit'
+          onClick={(e) => navigate(`/editpost/${post?._id}`)}
+        >
+          Edit post
+        </MenuItem>
+        <MenuItem key='delete' style={{ color: 'red' }} onClick={deletePost}>
+          Delete post
+        </MenuItem>
+      </Menu>
 
       {/* {imageurl && (
         <CardMedia
@@ -134,14 +183,13 @@ const Post = ({ post, refresh }) => {
           </div>
         </div>
       </CardActions>
-      {post?.userId === userId && (
-        <>
+
+      {/* <>
           <button onClick={deletePost}>delete post</button>
           <button onClick={(e) => navigate(`/editpost/${post?._id}`)}>
             edit post
           </button>
-        </>
-      )}
+        </> */}
     </Card>
   );
 };
