@@ -19,6 +19,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material';
+import ModalImage from 'react-modal-image';
 import { format, render, cancel, register } from 'timeago.js';
 import { API, PF } from '../../api';
 import { useContext } from 'react';
@@ -99,14 +100,18 @@ const Post = ({ post, refresh }) => {
         title={data?.name}
         subheader={format(post?.createdAt)}
       />
-      {imageurl && (
+
+      {/* {imageurl && (
         <CardMedia
           component='img'
           height='20%'
           image={imageurl}
           alt='Paella dish'
         />
-      )}
+      )} */}
+
+      {imageurl && <ModalImage small={imageurl} large={imageurl} />}
+
       <CardContent>
         <Typography variant='body2' color='text.secondary'>
           {post?.desc}

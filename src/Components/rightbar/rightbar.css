@@ -69,6 +69,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  text-align: center;
 }
 
 .rightbarFollowing {
@@ -76,6 +77,8 @@
   flex-direction: column;
   margin-bottom: 20px;
   cursor: pointer;
+  width: 100px;
+  text-align: center;
 }
 
 .rightbarFollowingImg {

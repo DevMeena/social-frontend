@@ -97,7 +97,7 @@ const UpdateProfile = () => {
 
     try {
       await axios.put(`${API}/user/${user?.user._id}`, userData, headers);
-      //   window.location.reload();
+      navigate('/profile/' + user?.user._id);
     } catch (err) {
       console.log(err);
     }

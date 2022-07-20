@@ -104,9 +104,7 @@ export default function Rightbar({ profile, refresh }) {
     // id !== user?.user?._id
     return (
       <>
-        <h4 className='rightbarTitle'>User information</h4>
-
-        {followed && <h3> YOU FOLLOWING THIS USER </h3>}
+        {/* {followed && <h3> YOU FOLLOWING THIS USER </h3>} */}
 
         {id !== user?.user._id && (
           <>
@@ -122,12 +120,14 @@ export default function Rightbar({ profile, refresh }) {
           </>
         )}
 
+        <h4 className='rightbarTitle' style={{ marginTop: 20 }}>
+          User information
+        </h4>
         <div className='rightbarInfo'>
           <div className='rightbarInfoItem'>
             <span className='rightbarInfoKey'>followers:</span>
             <span className='rightbarInfoValue'>
-              {' '}
-              {profile?.followers.length}{' '}
+              {profile?.followers.length}
             </span>
           </div>
 
@@ -184,7 +184,11 @@ export default function Rightbar({ profile, refresh }) {
                   style={{ textDecoration: 'none', color: 'black' }}
                   to={'/profile/' + f._id}
                 >
-                  <div className='rightbarFollowing' key={f._id}>
+                  <div
+                    className='rightbarFollowing'
+                    key={f._id}
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
                     <img
                       src={PF + f.profilePicture}
                       alt='follower'
@@ -207,7 +211,11 @@ export default function Rightbar({ profile, refresh }) {
                   style={{ textDecoration: 'none', color: 'black' }}
                   to={'/profile/' + f._id}
                 >
-                  <div className='rightbarFollowing' key={f._id}>
+                  <div
+                    className='rightbarFollowing'
+                    style={{ display: 'flex', alignItems: 'center' }}
+                    key={f._id}
+                  >
                     <img
                       src={PF + f.profilePicture}
                       alt='following'

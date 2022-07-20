@@ -8,6 +8,7 @@ import { useFetch } from '../../useFetch';
 import './profile.css';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
+import ModalImage from 'react-modal-image';
 
 export default function Profile() {
   // const [followed, setFollowed] = useState(false);
@@ -42,16 +43,26 @@ export default function Profile() {
         <div className='profileRight'>
           <div className='profileRightTop'>
             <div className='profileCover'>
-              <img
+              {/* <img
                 className='profileCoverImg'
                 src={'http://localhost:8000/images/' + data?.coverPicture}
                 alt='cp'
+              /> */}
+              <ModalImage
+                className='profileCoverImg'
+                small={'http://localhost:8000/images/' + data?.coverPicture}
+                large={'http://localhost:8000/images/' + data?.coverPicture}
               />
-              <img
+              <ModalImage
+                className='profileUserImg'
+                small={'http://localhost:8000/images/' + data?.profilePicture}
+                large={'http://localhost:8000/images/' + data?.profilePicture}
+              />
+              {/* <img
                 className='profileUserImg'
                 src={'http://localhost:8000/images/' + data?.profilePicture}
                 alt='dp'
-              />
+              /> */}
             </div>
             <div className='profileInfo'>
               <h4 className='profileInfoName'>{data?.name}</h4>
