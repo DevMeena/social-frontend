@@ -134,10 +134,14 @@ const Post = ({ post, refresh }) => {
           </div>
         </div>
       </CardActions>
-      <button onClick={deletePost}>delete post</button>
-      <button onClick={(e) => navigate(`/editpost/${post?._id}`)}>
-        edit post
-      </button>
+      {post?.userId === userId && (
+        <>
+          <button onClick={deletePost}>delete post</button>
+          <button onClick={(e) => navigate(`/editpost/${post?._id}`)}>
+            edit post
+          </button>
+        </>
+      )}
     </Card>
   );
 };

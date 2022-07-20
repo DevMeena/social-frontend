@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFetch } from '../../useFetch';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress, CssBaseline } from '@mui/material';
 import { PF } from '../../api';
 import Topbar from '../../Components/topbar/Topbar';
 import ModalImage from 'react-modal-image';
@@ -34,6 +34,7 @@ const Search = () => {
     </Backdrop>
   ) : (
     <>
+      <CssBaseline />
       <Topbar />
       <Typography variant='h2' sx={{ textAlign: 'center', margin: 6 }}>
         Search Results

@@ -8,6 +8,7 @@ import Rightbar from '../../Components/rightbar/Rightbar';
 export default function Home() {
   return (
     <>
+      <CssBaseline />
       <Topbar />
       <Box
         sx={{
