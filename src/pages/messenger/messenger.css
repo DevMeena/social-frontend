@@ -9,13 +9,7 @@
 
 .chatMenuInput {
   width: 90%;
-  padding: 0.625rem 0.3125rem;
-  border: none;
-  border-bottom: 1px solid grey;
-}
-
-.chatMenuInput:focus {
-  outline: none;
+  /* padding: 0.625rem 0.3125rem; */
 }
 
 .chatBox {
@@ -27,6 +21,12 @@
   flex-direction: column;
   justify-content: space-between;
   position:relative;
+}
+
+.chatName {
+  text-align: center;
+  padding-bottom: 0.5rem;
+  font-size: 1.1rem;
 }
 
 .chatBoxTop {
