@@ -35,8 +35,15 @@ export default function Feed() {
     </Backdrop>
   ) : (
     <Box sx={{ flex: '4.5' }}>
-      {!id && <Share refresh={refetch} />}
-      {id === user?.user?._id && <Share refresh={refetch} />}
+      {id ? (
+        id === user?.user?._id ? (
+          <Share refresh={refetch} />
+        ) : (
+          <></>
+        )
+      ) : (
+        <Share refresh={refetch} />
+      )}
       {data &&
         data.map((post) => (
           <Post key={post?._id} post={post} refresh={refetch} />
