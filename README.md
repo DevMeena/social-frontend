@@ -3,8 +3,7 @@
 ## To Do:
 
 1. Followers and Following Dropdown
-2. Add edit and delete buttons on Post's settings (triple dot)
-3. Add country/city and date picker
+2. Add country/city and date picker in update user
 
 ## Misc:
 
