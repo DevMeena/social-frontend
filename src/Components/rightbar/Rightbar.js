@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { format, render, cancel, register } from 'timeago.js';
 import { useFetch } from '../../useFetch';
+import { Link } from 'react-router-dom';
 
 export default function Rightbar({ profile, refresh }) {
   const HomeRightbar = () => {
@@ -179,14 +180,19 @@ export default function Rightbar({ profile, refresh }) {
           <div className='rightbarFollowings'>
             {userFollowers &&
               userFollowers.map((f) => (
-                <div className='rightbarFollowing' key={f._id}>
-                  <img
-                    src={PF + f.profilePicture}
-                    alt='follower'
-                    className='rightbarFollowingImg'
-                  />
-                  <span className='rightbarFollowingName'>{f.name}</span>
-                </div>
+                <Link
+                  style={{ textDecoration: 'none', color: 'black' }}
+                  to={'/profile/' + f._id}
+                >
+                  <div className='rightbarFollowing' key={f._id}>
+                    <img
+                      src={PF + f.profilePicture}
+                      alt='follower'
+                      className='rightbarFollowingImg'
+                    />
+                    <span className='rightbarFollowingName'>{f.name}</span>
+                  </div>
+                </Link>
               ))}
           </div>
         )}
@@ -197,14 +203,19 @@ export default function Rightbar({ profile, refresh }) {
           <div className='rightbarFollowings'>
             {userFollowings &&
               userFollowings.map((f) => (
-                <div className='rightbarFollowing' key={f._id}>
-                  <img
-                    src={PF + f.profilePicture}
-                    alt='following'
-                    className='rightbarFollowingImg'
-                  />
-                  <span className='rightbarFollowingName'>{f.name}</span>
-                </div>
+                <Link
+                  style={{ textDecoration: 'none', color: 'black' }}
+                  to={'/profile/' + f._id}
+                >
+                  <div className='rightbarFollowing' key={f._id}>
+                    <img
+                      src={PF + f.profilePicture}
+                      alt='following'
+                      className='rightbarFollowingImg'
+                    />
+                    <span className='rightbarFollowingName'>{f.name}</span>
+                  </div>
+                </Link>
               ))}
           </div>
         )}
