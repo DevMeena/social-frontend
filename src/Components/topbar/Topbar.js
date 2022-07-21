@@ -51,13 +51,13 @@ export default function Topbar() {
             onClick={(e) => navigate('/messenger')}
           >
             <Chat />
-            <span className='topbarIconBadge'>2</span>
+            {/* <span className='topbarIconBadge'>2</span> */}
           </div>
         </div>
         <div className='topbarIcons'>
           <div className='topbarIconItem'>
             <Notifications />
-            <span className='topbarIconBadge'>4</span>
+            {/* <span className='topbarIconBadge'>4</span> */}
           </div>
         </div>
         <Topbarbutton />

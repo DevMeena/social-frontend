@@ -24,9 +24,12 @@ import {
   Work,
 } from '@mui/icons-material';
 import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
   const [open, setOpen] = React.useState(true);
+
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setOpen(!open);
@@ -54,26 +57,26 @@ export default function Sidebar() {
           component='nav'
           aria-labelledby='nested-list-subheader'
         >
-          <ListItemButton>
+          <ListItemButton onClick={(e) => navigate('/home')}>
             <ListItemIcon>
               <RssFeed />
             </ListItemIcon>
             <ListItemText primary='Feed' />
           </ListItemButton>
 
-          <ListItemButton>
+          <ListItemButton onClick={(e) => navigate('/messenger')}>
             <ListItemIcon>
               <Chat />
             </ListItemIcon>
             <ListItemText primary='Chats' />
           </ListItemButton>
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <VideoLabel />
             </ListItemIcon>
             <ListItemText primary='Videos' />
-          </ListItemButton>
+          </ListItemButton> */}
 
           {/* <ListItemButton>
             <ListItemIcon>
@@ -82,7 +85,7 @@ export default function Sidebar() {
             <ListItemText primary='Groups' />
           </ListItemButton> */}
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <Bookmark />
             </ListItemIcon>
@@ -94,7 +97,7 @@ export default function Sidebar() {
               <QuestionMark />
             </ListItemIcon>
             <ListItemText primary='Questions' />
-          </ListItemButton>
+          </ListItemButton> */}
 
           {/* <ListItemButton>
             <ListItemIcon>
@@ -103,12 +106,12 @@ export default function Sidebar() {
             <ListItemText primary='Jobs' />
           </ListItemButton> */}
 
-          <ListItemButton>
+          {/* <ListItemButton>
             <ListItemIcon>
               <Event />
             </ListItemIcon>
             <ListItemText primary='Events' />
-          </ListItemButton>
+          </ListItemButton> */}
 
           {/* <ListItemButton>
             <ListItemIcon>

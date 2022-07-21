@@ -37,6 +37,7 @@ const theme = createTheme();
 
 export default function ForgotPassword() {
   const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
@@ -45,8 +46,10 @@ export default function ForgotPassword() {
     setSuccess(false);
     setError(false);
 
+    console.log(name, email);
+
     axios
-      .post(API + '/auth/forgotPassword', { email })
+      .post(API + '/auth/forgotPassword', { email, name })
       .then((res) => {
         console.log(res);
         setSuccess(true);
@@ -57,6 +60,7 @@ export default function ForgotPassword() {
       });
 
     setEmail('');
+    setName('');
   };
 
   const CustomToastWithLink = () => (
@@ -103,6 +107,19 @@ export default function ForgotPassword() {
             <ToastContainer />
 
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id='name'
+                  label='Name'
+                  name='name'
+                  autoComplete='name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField
                   required

@@ -35,7 +35,7 @@ import { useFetch } from '../../useFetch';
 
 const Post = ({ post, refresh }) => {
   const { loading, data, error } = useFetch(`/user/${post?.userId}`);
-  console.log(data);
+  // console.log(data);
   const navigate = useNavigate();
   var imageurl = post?.photo ? `${API}/post/photo/${post?._id}` : '';
   // const [user, setUser] = useState({});

@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { useFetch } from '../../useFetch';
 import Post from '../post/Post';
 import Share from '../share/Share';
@@ -18,11 +18,18 @@ export default function Feed() {
 
   const { user } = useContext(AuthContext);
 
-  console.log('THIS IS URL', url);
-
   const { data, loading, error, refetch } = useFetch(url);
+  const [refresh, setRefresh] = useState('');
+
+  React.useEffect(() => {
+    refetch();
+    return () => {
+      setRefresh('');
+    };
+  }, [refresh]);
 
   console.log(data);
+
   return loading ? (
     <Backdrop
       styles={{
@@ -37,15 +44,16 @@ export default function Feed() {
     <Box sx={{ flex: '4.5' }}>
       {id ? (
         id === user?.user?._id ? (
-          <Share refresh={refetch} />
+          <Share refresh={refetch} onChange={(value) => setRefresh(value)} />
         ) : (
           <></>
         )
       ) : (
-        <Share refresh={refetch} />
+        <Share refresh={refetch} onChange={(value) => setRefresh(value)} />
       )}
+
       {data &&
-        data.map((post) => (
+        data?.map((post) => (
           <Post key={post?._id} post={post} refresh={refetch} />
         ))}
     </Box>

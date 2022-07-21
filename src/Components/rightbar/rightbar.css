@@ -4,6 +4,10 @@
 
 .rightbarWrapper {
   padding: 20px 20px 0 0;
+  position: sticky;
+  top: 50px;
+  z-index: 1;
+  overflow-y: hidden;
 }
 
 .birthdayContainer {

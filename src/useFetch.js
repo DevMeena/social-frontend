@@ -19,7 +19,7 @@ export function useFetch(url) {
     axios
       .get(API + url, headers)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setData(response.data);
       })
       .catch((err) => {
@@ -36,6 +36,7 @@ export function useFetch(url) {
     axios
       .get(API + url, headers)
       .then((response) => {
+        console.log('REFEETCH', response);
         setData(response.data);
       })
       .catch((err) => {
