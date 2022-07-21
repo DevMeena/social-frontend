@@ -144,32 +144,35 @@ export default function SignUpSide() {
                 autoComplete='old-password'
               />
             </Grid> */}
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name='password'
-                value={newPass}
-                onChange={(e) => setNewPass(e.target.value)}
-                label='New Password'
-                type='password'
-                id='newpassword'
-                autoComplete='new-password'
-              />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name='password'
+                  value={newPass}
+                  onChange={(e) => setNewPass(e.target.value)}
+                  label='New Password'
+                  type='password'
+                  id='newpassword'
+                  autoComplete='new-password'
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  value={confPass}
+                  onChange={(e) => setConfPass(e.target.value)}
+                  name='password'
+                  label='Repeat New Password'
+                  type='password'
+                  id='repeatpassword'
+                  autoComplete='repeat-password'
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                value={confPass}
-                onChange={(e) => setConfPass(e.target.value)}
-                name='password'
-                label='Repeat New Password'
-                type='password'
-                id='repeatpassword'
-                autoComplete='repeat-password'
-              />
-            </Grid>
+
             {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={

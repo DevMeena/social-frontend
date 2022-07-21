@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { API } from '../api';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -80,6 +81,8 @@ export default function ForgotPassword() {
     }
   }, [success, error]);
 
+  const navigate = useNavigate();
+
   return (
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
@@ -140,6 +143,15 @@ export default function ForgotPassword() {
               sx={{ mt: 3, mb: 2 }}
             >
               Submit
+            </Button>
+            <Button
+              fullWidth
+              variant='outlined'
+              color='secondary'
+              onClick={(e) => navigate('/')}
+              sx={{ mt: 1, mb: 2 }}
+            >
+              Go Back
             </Button>
           </Box>
         </Box>
