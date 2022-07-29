@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import './Conversation.css';
 import axios from 'axios';
 import { API, PF } from '../../api';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-const Conversation = ({ conversation, currentUser}) => {
+const Conversation = ({ conversation, currentUser }) => {
   const [user, setUser] = useState(null);
   const token = currentUser.token;
   const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+  /* eslint-disable */
+
   useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser.user._id);
+    const friendId = conversation.members.find(
+      (m) => m !== currentUser.user._id
+    );
 
     const getUser = async () => {
       try {
@@ -23,16 +28,22 @@ const Conversation = ({ conversation, currentUser}) => {
     getUser();
   }, [currentUser, conversation]);
 
+  /* eslint-enable */
+
   return (
     <div className='conversation'>
       <img
         className='conversationImg'
-        src={user?.profilePicture ? PF+user.profilePicture: PF+"defaultProfile.jpg"}
-        alt=""
+        src={
+          user?.profilePicture
+            ? PF + user.profilePicture
+            : PF + 'defaultProfile.jpg'
+        }
+        alt=''
       />
-      <span className="conversationName">{user?.name}</span>
+      <span className='conversationName'>{user?.name}</span>
     </div>
-  )
-}
+  );
+};
 
-export default Conversation
+export default Conversation;

@@ -95,6 +95,8 @@ export default function SignUpSide() {
     </div>
   );
 
+  /* eslint-disable */
+
   useEffect(() => {
     if (success) {
       toast.success(CustomToastWithLink);
@@ -104,6 +106,8 @@ export default function SignUpSide() {
       toast.error(error);
     }
   }, [success, error]);
+
+  /* eslint-enable */
 
   return (
     <ThemeProvider theme={theme}>

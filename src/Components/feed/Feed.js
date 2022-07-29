@@ -21,6 +21,8 @@ export default function Feed() {
   const { data, loading, error, refetch } = useFetch(url);
   const [refresh, setRefresh] = useState('');
 
+  /* eslint-disable */
+
   React.useEffect(() => {
     refetch();
     return () => {
@@ -29,6 +31,8 @@ export default function Feed() {
   }, [refresh]);
 
   console.log(data);
+
+  /* eslint-enable */
 
   return loading ? (
     <Backdrop

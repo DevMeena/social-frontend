@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import { API } from './api';
 import { useFetch } from './useFetch';
@@ -13,14 +13,12 @@ import { Cancel } from '@mui/icons-material';
 import {
   Box,
   Button,
-  Fab,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -30,7 +28,7 @@ const Test = () => {
 
   const navigate = useNavigate();
 
-  const { loading, data, error } = useFetch(`/user/${user?.user._id}`);
+  const { data } = useFetch(`/user/${user?.user._id}`);
   console.log(PF);
   console.log(data);
 
