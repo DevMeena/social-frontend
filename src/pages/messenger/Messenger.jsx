@@ -28,14 +28,14 @@ const Messenger = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [followingsList, setFollowingsList] = useState([]);
   const [currentChatName, setCurrentChatName] = useState(null);
-  const socket = useRef(io('ws://connectbook-chat-api.herokuapp.com/'));
+  const socket = useRef(io('https://connectbook-chat-api.herokuapp.com/'));
   const { user } = useContext(AuthContext);
   const token = user.token;
   const headers = { headers: { Authorization: `Bearer ${token}` } };
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket.current = io('ws://connectbook-chat-api.herokuapp.com/');
+    socket.current = io('https://connectbook-chat-api.herokuapp.com/');
     socket.current.on('getMessage', (data) => {
       setArrivalMessage({
         sender: data.senderId,
