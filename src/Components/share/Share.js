@@ -24,12 +24,11 @@ import { API, PF } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
 import './share.css';
 
-export default function Share({ refresh }) {
+export default function Share({ refresh, onChange }) {
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [desc, setDesc] = useState('');
   const [file, setFile] = useState(null);
-
   const token = user.token;
   const headers = {
     headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
@@ -61,7 +60,8 @@ export default function Share({ refresh }) {
         console.log(err);
       });
 
-    refresh();
+    // refresh();
+    onChange('reload');
 
     setDesc('');
     setFile(null);

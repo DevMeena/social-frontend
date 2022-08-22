@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { API } from '../api';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -37,6 +38,7 @@ const theme = createTheme();
 
 export default function ForgotPassword() {
   const [email, setEmail] = React.useState('');
+  const [name, setName] = React.useState('');
   const [error, setError] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
@@ -45,8 +47,10 @@ export default function ForgotPassword() {
     setSuccess(false);
     setError(false);
 
+    console.log(name, email);
+
     axios
-      .post(API + '/auth/forgotPassword', { email })
+      .post(API + '/auth/forgotPassword', { email, name })
       .then((res) => {
         console.log(res);
         setSuccess(true);
@@ -57,6 +61,7 @@ export default function ForgotPassword() {
       });
 
     setEmail('');
+    setName('');
   };
 
   const CustomToastWithLink = () => (
@@ -75,6 +80,8 @@ export default function ForgotPassword() {
       toast.error('failed to send email');
     }
   }, [success, error]);
+
+  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
@@ -107,6 +114,19 @@ export default function ForgotPassword() {
                 <TextField
                   required
                   fullWidth
+                  id='name'
+                  label='Name'
+                  name='name'
+                  autoComplete='name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   id='email'
                   label='Email Address'
                   name='email'
@@ -123,6 +143,15 @@ export default function ForgotPassword() {
               sx={{ mt: 3, mb: 2 }}
             >
               Submit
+            </Button>
+            <Button
+              fullWidth
+              variant='outlined'
+              color='secondary'
+              onClick={(e) => navigate('/')}
+              sx={{ mt: 1, mb: 2 }}
+            >
+              Go Back
             </Button>
           </Box>
         </Box>

@@ -10,7 +10,6 @@ import ResetPassword from './Components/ResetPassword.js';
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import Test from './Test.js';
 import EditPost from './Components/share/EditPost.js';
 import Search from './pages/search/search.jsx';
 import UpdateProfile from './pages/updateProfile/updateProfile.jsx';

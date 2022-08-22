@@ -74,6 +74,8 @@ const Messenger = () => {
     };
     getConversations();
 
+    /* eslint-disable */
+
     const getFollowings = async () => {
       try {
         const res = await axios.get(
@@ -102,6 +104,8 @@ const Messenger = () => {
     };
     getMessages();
   }, [currentChat]);
+
+  /* eslint-enable */
 
   const handleSubmit = async (e) => {
     e.preventDefault();

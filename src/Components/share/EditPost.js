@@ -1,5 +1,4 @@
-// ! UPDATE POST
-
+import ModalImage from 'react-modal-image';
 import {
   EmojiEmotions,
   Label,
@@ -24,15 +23,22 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { API, PF } from '../../api';
 import { AuthContext } from '../../context/AuthContext';
+import { useFetch } from '../../useFetch';
+import Post from '../post/Post';
 import './share.css';
 
 export default function EditPost() {
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { postId } = useParams();
+  const { data } = useFetch('/post/' + postId);
+  console.log('post details', data);
+
+  var imageurl = data?.photo ? `${API}/post/photo/${data?._id}` : '';
+
   const [desc, setDesc] = useState('');
   const [file, setFile] = useState(null);
 
-  const { postId } = useParams();
   const navigate = useNavigate();
 
   const token = user.token;
@@ -78,6 +84,7 @@ export default function EditPost() {
       <Typography variant='h2' sx={{ textAlign: 'center', margin: 6 }}>
         Update Post
       </Typography>
+
       <Box
         sx={{
           padding: '7px',
@@ -179,6 +186,30 @@ export default function EditPost() {
             </Stack>
           </Box>
         </form>
+      </Box>
+      <Box
+        sx={{
+          padding: '7px',
+          width: '85%',
+          margin: 'auto',
+          marginTop: '10px',
+          webkitBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          mozBoxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          boxShadow: '0px 0px 16px -8px rgba(0,0,0,0.68)',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <div>
+          {imageurl && <ModalImage small={imageurl} large={imageurl} />}
+          {data?.desc && (
+            <Typography variant='h6' sx={{ textAlign: 'center', margin: 6 }}>
+              {data?.desc}
+            </Typography>
+          )}
+        </div>
       </Box>
     </>
   );

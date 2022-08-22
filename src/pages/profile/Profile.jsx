@@ -9,6 +9,7 @@ import './profile.css';
 import { useParams } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import ModalImage from 'react-modal-image';
+import { PF } from '../../api';
 
 export default function Profile() {
   // const [followed, setFollowed] = useState(false);
@@ -50,13 +51,13 @@ export default function Profile() {
               /> */}
               <ModalImage
                 className='profileCoverImg'
-                small={'http://localhost:8000/images/' + data?.coverPicture}
-                large={'http://localhost:8000/images/' + data?.coverPicture}
+                small={PF + data?.coverPicture}
+                large={PF + data?.coverPicture}
               />
               <ModalImage
                 className='profileUserImg'
-                small={'http://localhost:8000/images/' + data?.profilePicture}
-                large={'http://localhost:8000/images/' + data?.profilePicture}
+                small={PF + data?.profilePicture}
+                large={PF + data?.profilePicture}
               />
               {/* <img
                 className='profileUserImg'

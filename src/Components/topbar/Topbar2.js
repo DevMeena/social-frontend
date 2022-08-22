@@ -120,32 +120,32 @@ export default function Topbar2() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
+        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
+          {/* <Badge badgeContent={4} color='error'> */}
+          <MailIcon />
+          {/* </Badge> */}
         </IconButton>
         <p>Messages</p>
       </MenuItem>
       <MenuItem>
         <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
+          size='large'
+          aria-label='show 17 new notifications'
+          color='inherit'
         >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
+          {/* <Badge badgeContent={17} color='error'> */}
+          <NotificationsIcon />
+          {/* </Badge> */}
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
+          size='large'
+          aria-label='account of current user'
+          aria-controls='primary-search-account-menu'
+          aria-haspopup='true'
+          color='inherit'
         >
           <AccountCircle />
         </IconButton>
@@ -156,21 +156,21 @@ export default function Topbar2() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
+            size='large'
+            edge='start'
+            color='inherit'
+            aria-label='open drawer'
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
           <Typography
-            variant="h6"
+            variant='h6'
             noWrap
-            component="div"
+            component='div'
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             MUI
@@ -180,46 +180,50 @@ export default function Topbar2() {
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder='Search…'
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
             <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
+              size='large'
+              aria-label='show 4 new mails'
+              color='inherit'
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
+              {/* <Badge badgeContent={4} color="error"> */}
+              <MailIcon />
+              {/* </Badge> */}
             </IconButton>
             <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
+              size='large'
+              aria-label='show 17 new notifications'
+              color='inherit'
+            >
+              {/* <Badge badgeContent={17} color="error"> */}
+              <NotificationsIcon />
+              {/* </Badge> */}
+            </IconButton>
+            <IconButton
+              size='large'
+              edge='end'
+              aria-label='account of current user'
               aria-controls={menuId}
-              aria-haspopup="true"
+              aria-haspopup='true'
               onClick={handleProfileMenuOpen}
-              color="inherit"
+              color='inherit'
             >
               <AccountCircle />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
-              size="large"
-              aria-label="show more"
+              size='large'
+              aria-label='show more'
               aria-controls={mobileMenuId}
-              aria-haspopup="true"
+              aria-haspopup='true'
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              color='inherit'
             >
               <MoreIcon />
             </IconButton>
