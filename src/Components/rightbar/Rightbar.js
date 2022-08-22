@@ -10,24 +10,77 @@ import Button from '@mui/material/Button';
 import { format, render, cancel, register } from 'timeago.js';
 import { useFetch } from '../../useFetch';
 import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+import { io } from 'socket.io-client';
 
 export default function Rightbar({ profile, refresh }) {
+  const socket = useRef(io('ws://localhost:8900'));
+  const { user } = useContext(AuthContext);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [friends, setFriends] = useState([]);
+  const [onlineFriends, setOnlineFriends] = useState([]);
+  const token = user.token;
+  const headers = { headers: { Authorization: `Bearer ${token}` } };
+
+  useEffect(() => {
+    socket.current = io('ws://localhost:8900');
+    socket.current.on('getMessage', (data) => {
+      setArrivalMessage({
+        sender: data.senderId,
+        text: data.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit('addUser', user.user._id);
+    socket.current.on('getUsers', (users) => {
+      setOnlineUsers(
+        user.user.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [user]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      const res = await axios.get(
+        API + '/user/followings/' + user.user._id,
+        headers
+      );
+      setFriends(res.data);
+    };
+    getFriends();
+  }, [user]);
+
+  useEffect(() => {
+    setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
+  }, [friends, onlineUsers]);
+
   const HomeRightbar = () => {
     return (
       <div>
-        {/* <div className='birthdayContainer'>
-          <img className='birthdayImg' src='assets/gift.png' alt='' />
-          <span className='birthdayText'>
-            <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
-          </span>
-        </div> */}
-        {/* <img className='rightbarAd' src='assets/ad.png' alt='' /> */}
         <h4 className='rightbarTitle'>Online Friends</h4>
-        <ul className='rightbarFriendList'>
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
+        <div className='chatOnline'>
+          {onlineFriends.map((o) => (
+            <div className='chatOnlineFriend' key={o._id}>
+              <div className='chatOnlineImgContainer'>
+                <img
+                  className='chatOnlineImg'
+                  src={
+                    o?.profilePicture
+                      ? PF + o.profilePicture
+                      : PF + 'defaultProfile.jpg'
+                  }
+                  alt=''
+                />
+                <div className='chatOnlineBadge'></div>
+              </div>
+              <div className='chatOnlineName'>{o.name}</div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     );
   };
