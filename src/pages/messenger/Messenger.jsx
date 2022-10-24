@@ -35,8 +35,9 @@ const Messenger = () => {
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket.current = io('ws://localhost:8900');
+    // socket.current = io('ws://localhost:8900');
     socket.current.on('getMessage', (data) => {
+      console.log(data);
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -91,6 +92,7 @@ const Messenger = () => {
   }, [user]);
 
   useEffect(() => {
+    // console.log('getting msg');
     const getMessages = async () => {
       try {
         const res = await axios.get(

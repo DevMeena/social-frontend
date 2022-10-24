@@ -23,16 +23,16 @@ export default function Rightbar({ profile, refresh }) {
   const token = user.token;
   const headers = { headers: { Authorization: `Bearer ${token}` } };
 
-  useEffect(() => {
-    socket.current = io('ws://localhost:8900');
-    socket.current.on('getMessage', (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now(),
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   // socket.current = io('ws://localhost:8900');
+  //   socket.current.on('getMessage', (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       createdAt: Date.now(),
+  //     });
+  //   });
+  // }, []);
 
   useEffect(() => {
     socket.current.emit('addUser', user.user._id);
@@ -45,14 +45,17 @@ export default function Rightbar({ profile, refresh }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get(API + "/user/followings/" + user.user._id, headers);
+      const res = await axios.get(
+        API + '/user/followings/' + user.user._id,
+        headers
+      );
       setFriends(res.data);
-    }
+    };
     getFriends();
   }, [user]);
 
   useEffect(() => {
-    setOnlineFriends(friends.filter(f => onlineUsers.includes(f._id)));
+    setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
   }, [friends, onlineUsers]);
 
   const HomeRightbar = () => {
@@ -60,14 +63,22 @@ export default function Rightbar({ profile, refresh }) {
       <div>
         <h4 className='rightbarTitle'>Online Friends</h4>
         <div className='chatOnline'>
-          {onlineFriends.map(o => (
-            <div className="chatOnlineFriend" key={o._id}>
-              <div className="chatOnlineImgContainer">
-                <img className='chatOnlineImg' src={o?.profilePicture ? PF+o.profilePicture: PF+"defaultProfile.jpg"} alt="" />
-                <div className="chatOnlineBadge"></div>
+          {onlineFriends.map((o) => (
+            <div className='chatOnlineFriend' key={o._id}>
+              <div className='chatOnlineImgContainer'>
+                <img
+                  className='chatOnlineImg'
+                  src={
+                    o?.profilePicture
+                      ? PF + o.profilePicture
+                      : PF + 'defaultProfile.jpg'
+                  }
+                  alt=''
+                />
+                <div className='chatOnlineBadge'></div>
               </div>
-              <div className="chatOnlineName">{ o.name }</div>
-          </div>
+              <div className='chatOnlineName'>{o.name}</div>
+            </div>
           ))}
         </div>
       </div>
